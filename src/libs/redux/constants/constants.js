@@ -1,5 +1,4 @@
-export const api = "http://127.0.0.1:5000"
-// export const api = "https://meyr-api.adaptable.app"
+export const api = "https://meyere-api.adaptable.app"
 
 export const _user_loading = "_user_loading";
 export const _user_errors = "_user_errors";
