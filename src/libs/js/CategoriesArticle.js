@@ -1,0 +1,21 @@
+export const CategoriesArticle = [
+    { id: 1, name: "Collection" },
+    { id: 2, name: "Véhicule" },
+    { id: 3, name: "Immobilier" },
+    { id: 4, name: "Électronique" },
+    { id: 5, name: "Loisir" },
+    { id: 6, name: "Bijou" },
+    { id: 7, name: "Vêtement" },
+    { id: 8, name: "Jeux" },
+    { id: 9, name: "Sport" },
+    { id: 10, name: "Cosmétique" },
+    { id: 11, name: "Industrie" },
+    { id: 12, name: "Électroménagers" },
+    { id: 13, name: "Médical" },
+    { id: 14, name: "Alimentaires" },
+    { id: 15, name: "Animal" },
+    { id: 16, name: "Livre" },
+    { id: 17, name: "Antiquité" },
+    { id: 18, name: "Scientifique" },
+    { id: 19, name: "Jardinage" }
+]

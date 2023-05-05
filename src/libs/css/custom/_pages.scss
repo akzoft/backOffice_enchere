@@ -1,0 +1,114 @@
+.nouvel-article {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  .separator {
+    padding: 20px 0;
+  }
+  .image-container {
+    @include df-aic-jcsb;
+
+    .upload-box {
+      height: 100px;
+      width: 100%;
+      flex: 9;
+
+      .upload-content {
+        height: 100%;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+        border-radius: 5px;
+      }
+    }
+    .upload-items {
+      flex: 3;
+      @include dfc-aic-jcc;
+      gap: 10px;
+      height: 100%;
+      padding: 10px;
+      flex-wrap: wrap;
+
+      img {
+        width: 80%;
+        height: 50px;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+
+      .autre-images {
+        @include df-aic-jcsb;
+        height: 50px;
+        img {
+          width: 20%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .form-container {
+    width: 100%;
+    flex-wrap: wrap;
+
+    .options-livraison {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      .livraison-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+
+    .form-items {
+      width: 100%;
+      @include df-aic-jcsb;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .form-item {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        // .label {
+        // }
+        .input {
+          padding: 4px;
+          outline: none;
+          border-radius: 5px;
+          border: 1px solid $input-color;
+        }
+        textarea {
+          resize: none;
+          border-radius: 5px;
+          border: 1px solid $input-color;
+          outline: none;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+.modal {
+  position: absolute;
+  width: 60%;
+  height: 200px;
+  background: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
