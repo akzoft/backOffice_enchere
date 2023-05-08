@@ -1,114 +1,199 @@
+//////////////////////////////////
 .nouvel-article {
-  position: relative;
-  align-items: center;
-  justify-content: center;
-
-  .separator {
-    padding: 20px 0;
-  }
-  .image-container {
-    @include df-aic-jcsb;
-
-    .upload-box {
-      height: 100px;
-      width: 100%;
-      flex: 9;
-
-      .upload-content {
-        height: 100%;
-        border: 1px solid black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 5px;
-        border-radius: 5px;
-      }
-    }
-    .upload-items {
-      flex: 3;
-      @include dfc-aic-jcc;
-      gap: 10px;
-      height: 100%;
-      padding: 10px;
-      flex-wrap: wrap;
-
-      img {
-        width: 80%;
-        height: 50px;
-        object-fit: cover;
-        margin-bottom: 10px;
-      }
-
-      .autre-images {
-        @include df-aic-jcsb;
-        height: 50px;
-        img {
-          width: 20%;
-          object-fit: cover;
-        }
-      }
-    }
-  }
-
-  .form-container {
-    width: 100%;
+  .new_article_forms {
+    display: flex;
+    gap: 15px;
     flex-wrap: wrap;
 
-    .options-livraison {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-
-      .livraison-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-    }
-
-    .form-items {
-      width: 100%;
-      @include df-aic-jcsb;
-      gap: 10px;
-      flex-wrap: wrap;
+    .new_article_form_left {
+      flex: 4;
 
       .form-item {
         display: flex;
         flex-direction: column;
-        flex: 1;
-        // .label {
-        // }
-        .input {
-          padding: 4px;
-          outline: none;
-          border-radius: 5px;
-          border: 1px solid $input-color;
+        margin-bottom: 15px;
+
+        .label {
+          white-space: nowrap;
         }
-        textarea {
-          resize: none;
-          border-radius: 5px;
-          border: 1px solid $input-color;
+
+        .input {
+          padding: 5px;
           outline: none;
-          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .date {
+          padding: 5px;
+          outline: none;
+          border-radius: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+          width: 100%;
+        }
+
+        .options-livraison {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+    .new_article_form_right {
+      flex: 8;
+      flex-wrap: wrap;
+
+      .jodit-wysiwyg {
+        min-height: 200px;
+        max-height: 240px;
+        height: 240px;
+      }
+
+      .image-container {
+        @include df-aic-jcsb;
+        margin: 15px 0;
+
+        .upload-box {
+          height: 100px;
+          flex-wrap: wrap;
+          flex: 9;
+
+          .upload-content {
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+          }
+        }
+      }
+
+      .upload-items {
+        @include dfc-aic-jcc;
+        gap: 10px;
+        height: 100%;
+        flex-wrap: wrap;
+
+        .autre-images {
+          @include df-aic-jcsb;
+          flex-wrap: wrap;
+
+          @media only screen and (max-width: 720px) {
+            height: 200px;
+          }
+
+          img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 1px solid tomato;
+            border-radius: 5px;
+          }
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
         }
       }
     }
   }
 }
-.modal {
-  position: absolute;
-  width: 60%;
-  height: 200px;
-  background: gray;
+
+.article_details {
+  .main_content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .article_details_left {
+      flex: 5;
+
+      .image_container {
+        .main_image {
+          display: flex;
+          justify-content: center;
+          img {
+            height: 300px;
+            width: 300px;
+            object-fit: contain;
+            // border: 1px solid $main;
+          }
+        }
+        .other_images {
+          display: flex;
+          justify-content: space-between;
+          img {
+            flex: 3;
+            width: 100px;
+            height: 100px;
+            border: 1px solid $main;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    .article_details_right {
+      flex: 7;
+
+      .display_item {
+        display: flex;
+        justify-content: space-between;
+
+        .item {
+          margin: 15px 0;
+        }
+      }
+    }
+  }
+
+  .description {
+    padding: 20px;
+  }
+}
+
+.modal-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+
+  .replace {
+    padding: 10px;
+    background: $main;
+    color: white;
+    width: 60%;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .delete {
+    padding: 10px;
+    background: #000;
+    color: white;
+    width: 60%;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+.swal2-confirm,
+.swal2-cancel {
+  border: none !important;
+  padding: 10px 25px;
+  cursor: pointer;
+}
+
+.swal2-confirm {
+  background: $main;
+  color: white;
+}
+.swal2-confirm {
+  color: white;
 }

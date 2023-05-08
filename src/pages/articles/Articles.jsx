@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Card, PageTableHeader } from '../../components'
 import { PageTabs, PageTitle, Table } from '../../components/commons'
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpirationVerify, deleteUser, delete_enchere, updateUser, update_enchere } from '../../libs';
+import { ExpirationVerify, delete_enchere, formatNumberWithSpaces, update_enchere_actions } from '../../libs';
 import { useNavigate } from 'react-router-dom';
+import Countdown from 'react-countdown';
 
 const Articles = () => {
     const navigate = useNavigate()
@@ -16,45 +17,17 @@ const Articles = () => {
     const [data, setData] = useState([])
     const [rows, setRows] = useState([])
 
-    const { host } = useSelector(state => state?.user);
+    const { host, users } = useSelector(state => state?.user);
     const { encheres } = useSelector(state => state?.enchere);
 
     const column = [
-        {
-            name: "No.",
-            selector: (row, i) => i,
-        },
-        {
-            name: "Titre",
-            selector: (row) => row?.title || "...",
-            sortable: true,
-        },
-        {
-            name: "Propriétaire",
-            selector: (row) => row?.sellerID?.phone || "...",
-            sortable: true,
-        },
-        {
-            name: "Montant d'incrementation",
-            selector: (row) => row?.increase_price || "...",
-            sortable: true,
-        },
-        ,
-        {
-            name: "Prix actuel",
-            selector: (row) => row?.history[row?.history?.length - 1]?.montant || row?.started_price,
-            sortable: true,
-        },
-        {
-            name: "Status",
-            selector: (row) => row?.enchere_status,
-            sortable: true,
-        },
-        {
-            name: "Delai d'expiration",
-            selector: (row) => row?.expiration_time,
-            sortable: true,
-        }
+        { name: "No.", selector: (row, i) => i, },
+        { name: "Titre", selector: (row) => row?.title || "...", sortable: true, },
+        { name: "Propriétaire", selector: (row) => users?.map(user => user?._id === row?.sellerID && (user?.facebook?.first_name || user?.phone)), sortable: true, },
+        { name: "Montant d'incrementation", selector: (row) => formatNumberWithSpaces(row?.increase_price) || "...", sortable: true, },
+        { name: "Prix actuel", selector: (row) => formatNumberWithSpaces(row?.history[row?.history?.length - 1]?.montant) || formatNumberWithSpaces(row?.started_price), sortable: true, },
+        { name: "Status", selector: (row) => row?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(row?.expiration_time) ? "Expiration" : row?.enchere_status === "rejected" ? "Article rejeté" : "Publié", sortable: true, },
+        { name: "Delai d'expiration", selector: (row) => <Countdown date={new Date(row?.expiration_time)} renderer={renderer}></Countdown>, sortable: true, }
     ]
 
     const tabsItems = [
@@ -94,6 +67,8 @@ const Articles = () => {
     const handleApply = (e) => {
         e.preventDefault();
 
+
+
         if (rows?.length > 0) {
             switch (dropDown) {
                 case "modifier": if (rows?.length === 1) navigate(`/articles/edition-article/${rows[0]}`); break;
@@ -104,7 +79,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, enchere_status: "published", }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "published", }));
                         });
                     });
                     break;
@@ -115,7 +90,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, enchere_status: "pending", }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "pending", }));
                         });
                     });
                     break;
@@ -126,7 +101,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, enchere_status: "rejected", }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "rejected", }));
                         });
                     });
                     break;
@@ -135,7 +110,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, enchere_status: "published", }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "published", }));
                         });
                     });
                     break;
@@ -144,7 +119,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, enchere_status: "closed", }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "closed", }));
                         });
                     });
                     break;
@@ -153,7 +128,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, trash: true, enchere_status: "pending" }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, trash: true, enchere_status: "pending" }));
                         });
                     });
                     break;
@@ -162,7 +137,7 @@ const Articles = () => {
                     data?.forEach((enchere) => {
                         rows.forEach((id) => {
                             if (enchere?._id === id)
-                                dispatch(update_enchere({ id, hostID: host?._id, trash: false, }));
+                                dispatch(update_enchere_actions({ id, hostID: host?._id, trash: false, }));
                         });
                     });
                     break;
@@ -204,8 +179,6 @@ const Articles = () => {
     };
 
 
-
-
     return (
         <div>
             <Card>
@@ -223,3 +196,33 @@ export default Articles
 
 
 
+
+
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+        // Le compte à rebours est terminé
+        return <span>Expiré!</span>;
+    } else {
+        // Afficher les labels pour chaque élément
+        return (
+            <div style={{ display: 'flex', alignItems: 'center', fontSize: "12px", gap: "2px" }}>
+                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "30px", height: "30px", justifyContent: "center" }}>
+                    <div style={{ textAlign: "center" }}>{days}</div>
+                    <div style={{ fontSize: "5px", textAlign: "center" }}>Jours</div>
+                </div>
+                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "30px", height: "30px", justifyContent: "center" }}>
+                    <div style={{ textAlign: "center" }}>{hours}</div>
+                    <div style={{ fontSize: "5px", textAlign: "center" }}>Heures</div>
+                </div>
+                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "30px", height: "30px", justifyContent: "center" }}>
+                    <div style={{ textAlign: "center" }}>{minutes}</div>
+                    <div style={{ fontSize: "5px", textAlign: "center" }}>Minutes</div>
+                </div>
+                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "30px", height: "30px", justifyContent: "center" }}>
+                    <div style={{ textAlign: "center" }}>{seconds}</div>
+                    <div style={{ fontSize: "5px", textAlign: "center" }}>Secondes</div>
+                </div>
+            </div>
+        );
+    }
+};

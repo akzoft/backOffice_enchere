@@ -15,11 +15,12 @@ import EditionArticles from "./articles/sub/EditionArticles";
 import ArticlesPrivee from "./articles/sub/ArticlesPrivee";
 import ArticlesPublics from "./articles/sub/ArticlesPublics";
 import Login from "./auth/Login";
+import DisplayArticle from "./articles/sub/DisplayArticle";
 
 
 export {
     Dashboard,
-    Articles, NouvelArticles, EditionArticles, ArticlesPrivee, ArticlesPublics,
+    Articles, NouvelArticles, EditionArticles, ArticlesPrivee, ArticlesPublics, DisplayArticle,
     Clients, NouveauClient, EditionClients, ClientsPrives, ClientsPublics,
     Utilisateurs, EditionUtilisateur, NouvelUtilisateur,
     Setting, Login

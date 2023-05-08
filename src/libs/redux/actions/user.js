@@ -18,8 +18,8 @@ export const user_error = (error) => {
 
 export const checking = () => async (dispatch) => {
     try {
-        const token = Cookies.get("cookie");
-        if (!token) throw ""
+        var token = Cookies.get("cookie");
+        if (!token) token = ""
         const res = await axios.post(`${api}/api/user/checking`, null, { headers: { token } });
         if (!res.data) dispatch(logout())
     } catch (error) {
@@ -32,8 +32,8 @@ export const auth = () => async (dispatch) => {
     try {
         dispatch(isLoading())
 
-        let token = Cookies.get("cookie")
-        if (!token) throw ""
+        var token = Cookies.get("cookie")
+        if (!token) token = ""
 
         const res = await axios.post(`${api}/api/user/checking`, null, { headers: { token } });
         if (res.data) {

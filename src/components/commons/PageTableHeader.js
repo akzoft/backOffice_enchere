@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const PageTableHeader = ({ dropdownItems, activeTab, search, dropDown, setDropDown, handleFilter, handleApply }) => {
 

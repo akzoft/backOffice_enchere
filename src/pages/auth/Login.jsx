@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from '../../components'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { handleChange, isEmpty, login } from '../../libs'
 import { useSelector } from 'react-redux'
@@ -54,15 +54,10 @@ const Login = () => {
         dispatch(login(inputs));
         if (oldPath) navigate(oldPath); else navigate("/dashboard")
     };
-    console.log(inputs)
 
-    // if (isAuth) return <Navigate to={"/dashboard"} replace />
-    // if (!isAuth)
     return (
         <form onSubmit={handleSubmit} className='login-container'>
-
             <div className="login-box">
-
                 <div className="login-text">
                     <div className="login-img-container">
                         <img src="assets/login-logo.png" alt="" className='login-image' />

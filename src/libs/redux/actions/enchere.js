@@ -15,14 +15,35 @@ export const enchere_error = (error) => {
     }
 }
 
-export const create_enchere = (data) => async (dispatch) => {
-    try {
-        dispatch(isLoading());
-        const token = Cookies.get("cookie")
-        const ans = await axios.post(`${api}/api/enchere`, data, { headers: { token } })
+// export const create_enchere = (data) => async (dispatch) => {
+//     try {
+//         dispatch(isLoading());
+//         const token = Cookies.get("cookie")
+//         const ans = await axios.post(`${api}/api/enchere`, data, { headers: { token } })
 
-        if (!isEmpty(ans.data))
-            dispatch({ type: _enchere_create_success, payload: { ans: ans.data.response, message: ans.data.message } })
+//         if (!isEmpty(ans.data))
+//             dispatch({ type: _enchere_create_success, payload: { ans: ans.data.response, message: ans.data.message } })
+//     } catch (error) {
+//         dispatch(enchere_error(error))
+//     }
+// }
+
+
+export const create_enchere = (files, data) => async (dispatch) => {
+    try {
+        dispatch(isLoading())
+
+        const token = Cookies.get("cookie")
+
+        const config_upload = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+        const response_upload = await axios.post(`${api}/api/enchere/upload_create`, files, config_upload)
+
+        const config = { headers: { token } }
+        console.log(data)
+        const ans = await axios.post(`${api}/api/enchere/admin-create-enchere`, { ...data, medias: response_upload?.data?.response }, config)
+
+        dispatch({ type: _enchere_create_success, payload: { ans: ans.data.response, message: ans.data.message } })
     } catch (error) {
         dispatch(enchere_error(error))
     }
@@ -41,7 +62,37 @@ export const upload_creat = (data) => async (dispatch) => {
     }
 }
 
-export const update_enchere = (data) => async (dispatch) => {
+export const update_enchere = (enchere_id, hostID, files, data) => async (dispatch) => {
+    try {
+        dispatch(isLoading())
+        const { _parts } = files
+
+        const token = Cookies.get("cookie")
+
+        if (_parts?.length !== 0) {
+
+            const config_upload = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+            const response_upload = await axios.put(`${api}/api/enchere/upload_edit`, files, config_upload)
+
+            const config = { headers: { token } }
+
+            const ans = await axios.put(`${api}/api/enchere/${enchere_id}/${hostID}`, { ...data, new_img: response_upload?.data?.response }, config)
+
+            dispatch({ type: _enchere_update_success, payload: { ans: ans.data.response, message: ans.data.message } })
+        } else {
+            const config = { headers: { token } }
+
+            const ans = await axios.put(`${api}/api/enchere/${enchere_id}/${hostID}`, data, config)
+
+            dispatch({ type: _enchere_update_success, payload: { ans: ans.data.response, message: ans.data.message } })
+        }
+    } catch (error) {
+        dispatch(enchere_error(error))
+    }
+}
+
+export const update_enchere_actions = (data) => async (dispatch) => {
     try {
         dispatch(isLoading());
         console.log(data)

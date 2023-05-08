@@ -32,7 +32,6 @@ const SidebarContent = ({ menuItems }) => {
 
         menuItems.forEach((item) => {
             const submenu = item.querySelector(".submenu");
-            const arrow = item.querySelector(".arrow")
 
             item.addEventListener("click", () => {
 
@@ -110,7 +109,7 @@ const Sidebar = () => {
     return (
         <div className='sidebar'>
             <div className="sidebar-brand">
-                <img src='assets/logo.jpeg' className='sidebar-logo' />
+                <img src='assets/logo.jpeg' className='sidebar-logo' alt='logo' />
                 {/* <span>meYere</span> */}
             </div>
 

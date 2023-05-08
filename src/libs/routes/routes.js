@@ -1,30 +1,5 @@
-import { lazy } from "react"
 import Login from "../../pages/auth/Login"
-import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs } from "../../pages"
-
-
-// const Dashboard = lazy(() => import("../../pages/dashboard/Dashboard"))
-
-// const Articles = lazy(() => import("../../pages/articles/Articles"))
-// const NouvelArticles = lazy(() => import("../../pages/articles/sub/NouvelArticles"))
-// const EditionArticles = lazy(() => import("../../pages/articles/sub/EditionArticles"))
-// const ArticlesPublics = lazy(() => import("../../pages/articles/sub/ArticlesPublics"))
-// const ArticlesPrivee = lazy(() => import("../../pages/articles/sub/ArticlesPrivee"))
-
-// const Clients = lazy(() => import("../../pages/clients/Clients"))
-// const NouveauClient = lazy(() => import("../../pages/clients/sub/NouveauClient"))
-// const EditionClients = lazy(() => import("../../pages/clients/sub/EditionClients"))
-// const ClientsPublics = lazy(() => import("../../pages/clients/sub/ClientsPublics"))
-// const ClientsPrives = lazy(() => import("../../pages/clients/sub/ClientsPrives"))
-
-// const Utilisateurs = lazy(() => import("../../pages/utilisateurs/Utilisateurs"))
-// const NouvelUtilisateur = lazy(() => import("../../pages/utilisateurs/sub/NouvelUtilisateur"))
-// const EditionUtilisateur = lazy(() => import("../../pages/utilisateurs/sub/EditionUtilisateur"))
-
-// const Parametres = lazy(() => import("../../pages/setting/Setting"))
-
-
-
+import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs } from "../../pages"
 
 const routes = [
     { path: '/', exact: true, name: 'Login', element: Login },
@@ -33,6 +8,7 @@ const routes = [
     { path: '/articles', name: 'Articles', element: Articles, exact: true },
     { path: '/articles/nouvel-article', name: 'Nouvel article', element: NouvelArticles },
     { path: '/articles/edition-article/:id', name: 'Edition article', element: EditionArticles },
+    { path: '/articles/details-article/:id', name: 'Details article', element: DisplayArticle },
     { path: '/articles/articles-publics', name: 'Articles publics', element: ArticlesPublics },
     { path: '/articles/articles-prives', name: 'Articles privés', element: ArticlesPrivee },
 

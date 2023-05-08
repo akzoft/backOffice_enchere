@@ -1,9 +1,9 @@
-import { lazy, useEffect } from "react";
+import { useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import "./libs/css/style.scss"
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { PrivateRoute, auth, getUsers } from "./libs";
+import { PrivateRoute, auth } from "./libs";
 import Login from "./pages/auth/Login";
 import Layout from "./layout";
 

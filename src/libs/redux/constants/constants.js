@@ -1,4 +1,11 @@
 export const api = "https://meyere-api.adaptable.app"
+export const api_public = "https://meyere-api.adaptable.app/api/public"
+
+// export const api = "http://192.168.1.102:5000"
+// export const api_public = "http://192.168.1.102:5000/api/public"
+
+// export const api = "http://127.0.0.1:5000"
+// export const api_public = "http://127.0.0.1:5000/api/public"
 
 export const _user_loading = "_user_loading";
 export const _user_errors = "_user_errors";

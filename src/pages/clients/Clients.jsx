@@ -19,36 +19,12 @@ const Clients = () => {
     const { users, host } = useSelector(state => state?.user);
 
     const column = [
-        {
-            name: "No.",
-            selector: (row, i) => i,
-        },
-        {
-            name: "Téléphone",
-            selector: (row) => row?.phone || "...",
-            sortable: true,
-        },
-        {
-            name: "E-mail",
-            selector: (row) => row?.email || "...",
-            sortable: true,
-        },
-        {
-            name: "Ville",
-            selector: (row) => row?.town || "...",
-            sortable: true,
-        },
-        ,
-        {
-            name: "Membre",
-            selector: (row) => row?.vip ? "VIP" : "Particulier",
-            sortable: true,
-        },
-        {
-            name: "Status",
-            selector: (row) => (!row?.vip && row?.rejected) ? "Exclus" : "Non exclus",
-            sortable: true,
-        }
+        { name: "No.", selector: (row, i) => i, },
+        { name: "Téléphone", selector: (row) => row?.phone || "...", sortable: true, },
+        { name: "E-mail", selector: (row) => row?.email || "...", sortable: true, },
+        { name: "Ville", selector: (row) => row?.town || "...", sortable: true, },
+        { name: "Membre", selector: (row) => row?.vip ? "VIP" : "Particulier", sortable: true, },
+        { name: "Status", selector: (row) => (!row?.vip && row?.rejected) ? "Exclus" : "Non exclus", sortable: true, }
     ]
 
     const tabsItems = [{ label: "tous", size: users?.filter(user => !user?.trash).length || 0 }, { label: "non exclus", size: users?.filter(user => !user?.trash && !user?.rejected).length || 0 }, { label: "exclus", size: users?.filter(user => !user?.trash && user?.rejected).length || 0 }, { label: "corbeille", size: users?.filter(user => user?.trash).length || 0 }]

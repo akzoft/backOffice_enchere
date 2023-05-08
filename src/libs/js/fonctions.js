@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-
 // VERIFIER SI UN ELEMENT EST VIDE
 export const isEmpty = (value) =>
     value === undefined ||
@@ -87,3 +85,5 @@ export const convertOctetsToMo = (octets) => {
     const megaoctets = octets / (1024 * 1024)
     return megaoctets.toFixed(0)
 }
+
+export const formatNumberWithSpaces = (data, separator) => data?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, separator || ".");

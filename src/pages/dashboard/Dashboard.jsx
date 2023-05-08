@@ -1,5 +1,4 @@
 import React from 'react'
-import { Breadcrumb } from '../../components/commons'
 
 const Dashboard = () => {
     return (
