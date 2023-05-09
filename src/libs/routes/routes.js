@@ -1,5 +1,5 @@
 import Login from "../../pages/auth/Login"
-import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, DisplayClient, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs, VitepayCancel, VitepayDecline, VitepaySuccess } from "../../pages"
+import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, DisplayClient, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs, } from "../../pages"
 
 const routes = [
     { path: '/', exact: true, name: 'Login', element: Login },
