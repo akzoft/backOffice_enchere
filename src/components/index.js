@@ -1,4 +1,5 @@
 import { NouvelArticleForms } from "../libs";
+import NouveauCientForms from "./clients/NouveauCientForms";
 import { Card, } from "./commons";
 import Loading from "./commons/Loading";
 import PageTableHeader from "./commons/PageTableHeader";
@@ -11,5 +12,5 @@ import Sidebar from "./main/Sidebar";
 export {
     Content, Sidebar, Navbar, PageTableHeader,
     DisplayArticleBody,
-    Card, Loading, EditArticleForms, NouvelArticleForms,
+    Card, Loading, EditArticleForms, NouvelArticleForms, NouveauCientForms
 }

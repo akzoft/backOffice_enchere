@@ -17,17 +17,20 @@ const ClientsPrives = () => {
     const [rows, setRows] = useState([])
 
     const { users, host } = useSelector(state => state?.user);
+    const { encheres } = useSelector(state => state?.enchere)
 
     const column = [
         { name: "No.", selector: (row, i) => i, },
         { name: "Téléphone", selector: (row) => row?.phone || "...", sortable: true, },
+        { name: "Articles privés", selector: (row) => encheres?.filter(enchere => (enchere?.sellerID === row?._id && enchere?.enchere_type === "private"))?.length, sortable: true, },
+        { name: "Articles publique", selector: (row) => encheres?.filter(enchere => (enchere?.sellerID === row?._id && enchere?.enchere_type === "public"))?.length, sortable: true, },
         { name: "E-mail", selector: (row) => row?.email || "...", sortable: true, },
         { name: "Ville", selector: (row) => row?.town || "...", sortable: true, },
         { name: "Membre", selector: (row) => row?.vip ? "VIP" : "Particulier", sortable: true, },
         { name: "Status", selector: (row) => (!row?.vip && row?.rejected) ? "Exclus" : "Non exclus", sortable: true, }
     ]
 
-    const tabsItems = [{ label: "tous", size: users?.filter(user => !user?.trash).length || 0 }, { label: "non exclus", size: users?.filter(user => !user?.trash && !user?.rejected).length || 0 }, { label: "exclus", size: users?.filter(user => !user?.trash && user?.rejected).length || 0 }, { label: "corbeille", size: users?.filter(user => user?.trash).length || 0 }]
+    const tabsItems = [{ label: "tous", size: users?.filter(user => !user?.trash && !user?.admin && user?.vip).length || 0 }, { label: "non exclus", size: users?.filter(user => !user?.trash && !user?.rejected && !user?.admin && user?.vip).length || 0 }, { label: "exclus", size: users?.filter(user => !user?.trash && user?.rejected && !user?.admin && user?.vip).length || 0 }, { label: "corbeille", size: users?.filter(user => user?.trash && !user?.admin && user?.vip).length || 0 }]
 
     const dropdownItems = [
         { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
@@ -40,13 +43,16 @@ const ClientsPrives = () => {
         if (data) setFiltered(data);
     }, [data])
 
+
+
+
     useEffect(() => {
         switch (activeTab) {
-            case "tous": setData(users?.filter(user => !user?.trash && user?.vip && !user?.admin)); break;
-            case "exclus": setData(users?.filter(user => !user?.trash && user?.rejected && user?.vip && !user?.admin)); break;
-            case "non exclus": setData(users?.filter(user => !user?.trash && !user?.rejected && user?.vip && !user?.admin)); break;
-            case "corbeille": setData(users?.filter(user => user?.trash && user?.vip && !user?.admin)); break;
-            default: setData(users?.filter(user => !user?.trash && user?.vip && !user?.admin)); break;
+            case "tous": setData(users?.filter(user => !user?.trash && !user?.admin && user?.vip)); break;
+            case "exclus": setData(users?.filter(user => !user?.trash && user?.rejected && !user?.admin && user?.vip)); break;
+            case "non exclus": setData(users?.filter(user => !user?.trash && !user?.rejected && !user?.admin && user?.vip)); break;
+            case "corbeille": setData(users?.filter(user => user?.trash && !user?.admin && user?.vip)); break;
+            default: setData(users?.filter(user => !user?.trash && !user?.admin && user?.vip)); break;
         }
     }, [users, activeTab]);
 
@@ -55,30 +61,56 @@ const ClientsPrives = () => {
 
         if (rows?.length > 0) {
             switch (dropDown) {
-                case "modifier": if (rows?.length === 1) navigate(`/utilisateurs/edition-utilisateur/${rows[0]}`); break;
+                case "modifier": if (rows?.length === 1) navigate(`/clients/edition-client/${rows[0]}`); break;
 
-                case "afficher": if (rows?.length === 1) navigate(`/utilisateurs/details-utilisateur/${rows[0]}`); break;
+                case "afficher": if (rows?.length === 1) navigate(`/clients/details-client/${rows[0]}`); break;
 
                 case "exclure":
                     if (rows?.includes(host?._id)) { alert("\tErreur de d'exlusion\nVous ne pouvez pas exclure votre profile!"); return; }
-                    data?.forEach((user) => { rows?.forEach((id) => { if (user?._id === id) dispatch(updateUser({ id, hostID: host?._id, rejected: true, })); }); });
+
+                    data?.forEach((user) => {
+                        rows?.forEach((id) => {
+                            if (user?._id === id)
+                                dispatch(updateUser({ id, hostID: host?._id, rejected: true, }));
+                        });
+                    });
                     break;
 
                 case "desexclure":
-                    data?.forEach((user) => { rows?.forEach((id) => { if (user?._id === id) dispatch(updateUser({ id, hostID: host?._id, rejected: false, })); }); });
+                    data?.forEach((user) => {
+                        rows?.forEach((id) => {
+                            if (user?._id === id)
+                                dispatch(updateUser({ id, hostID: host?._id, rejected: false, }));
+                        });
+                    });
                     break;
 
                 case "in-trash":
                     if (rows?.includes(host?._id)) { alert("\tErreur de suppression\nVous ne pouvez pas supprimer votre profile!"); return; }
-                    data?.forEach((user) => { rows?.forEach((id) => { if (user?._id === id) dispatch(updateUser({ id, hostID: host?._id, trash: true, })); }); });
+
+                    data?.forEach((user) => {
+                        rows?.forEach((id) => {
+                            if (user?._id === id)
+                                dispatch(updateUser({ id, hostID: host?._id, trash: true, }));
+                        });
+                    });
                     break;
 
                 case "restaurer":
-                    data?.forEach((user) => { rows.forEach((id) => { if (user?._id === id) dispatch(updateUser({ id, hostID: host?._id, trash: false, })); }); });
+                    data?.forEach((user) => {
+                        rows.forEach((id) => {
+                            if (user?._id === id)
+                                dispatch(updateUser({ id, hostID: host?._id, trash: false, }));
+                        });
+                    });
                     break;
 
                 case "supprimer":
-                    data?.forEach((user) => { rows.forEach((id) => { if (user?._id === id && user?.trash) dispatch(deleteUser({ id, hostID: host?._id })); }); });
+                    data?.forEach((user) => {
+                        rows.forEach((id) => {
+                            if (user?._id === id && user?.trash) dispatch(deleteUser({ id, hostID: host?._id }));
+                        });
+                    });
                     break;
 
                 case "vider": data?.forEach((user) => { if (user?.trash) dispatch(deleteUser({ id: user?._id, hostID: host?._id })); }); break;
@@ -114,7 +146,7 @@ const ClientsPrives = () => {
     return (
         <div>
             <Card>
-                <PageTitle title={"Liste des clients VIP"} />
+                <PageTitle title={"Liste des clients"} linked={true} link={"/clients/nouveau-client"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
                 <Table column={column} datas={filtered} setRows={setRows} />
@@ -124,6 +156,16 @@ const ClientsPrives = () => {
 }
 
 export default ClientsPrives
+
+
+
+
+
+
+
+
+
+
 
 
 

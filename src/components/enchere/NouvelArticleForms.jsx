@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CategoriesArticle, handleChange, isEmpty } from '../../libs';
+import { CategoriesArticle, handleChange, inputSeparatorMille, isEmpty } from '../../libs';
 import Select from 'react-select';
 import ReactModal from 'react-modal';
 import ReactSwitch from 'react-switch';
@@ -110,19 +110,19 @@ const NouvelArticleForms = ({ description, setDescription, checked, setChecked, 
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Prix de depart <span className='required'>*</span></label>
-                        <input type="text" className='input' name='started_price' value={inputs.started_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='started_price' value={inputs.started_price} onChange={(e) => inputSeparatorMille(e, 'started_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.started_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.started_price}</span>}
                     </div>
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Prix de reservation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => inputSeparatorMille(e, 'increase_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
                     </div>
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Montant d'incrementation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => inputSeparatorMille(e, 'reserve_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
                     </div>
 
@@ -135,7 +135,6 @@ const NouvelArticleForms = ({ description, setDescription, checked, setChecked, 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Type d'enchère <span className='required'>*</span></label>
                         <select className='input' name='enchere_type' value={inputs.enchere_type} onChange={e => handleChange(e, setInputs)} >
-                            <option value={""}>Choisir un type d'enchère</option>
                             <option value={"public"}>Publique</option>
                             <option value={"private"}>Privée</option>
                         </select>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css';
+import { deleteSeparator } from '../../../libs/js/fonctions'
 
 
 const NouvelArticles = () => {
@@ -29,7 +30,7 @@ const NouvelArticles = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (isEmpty(errors) && clickSubmit) {
+        if (created_id && isEmpty(errors)) {
             const swalWithBootstrapButtons = Swal.mixin({ customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' }, buttonsStyling: false })
             setClickSubmit(false)
             swalWithBootstrapButtons.fire({
@@ -40,9 +41,11 @@ const NouvelArticles = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setClickSubmit(false)
-                    navigate("/articles/details-article/" + created_id)
+                    navigate("/articles/details-article/" + created_id?._id)
                 }
             })
+
+            dispatch({ type: "_clear_created_id" })
         }
     }, [clickSubmit, navigate, created_id, dispatch, errors])
 
@@ -53,12 +56,17 @@ const NouvelArticles = () => {
         inputs.sellerID = host?._id
         inputs.categories = categories.map(categorie => categorie.value)
         inputs.expiration_time = new Date(date).toISOString()
-        inputs.enchere_type = host?.vip ? inputs.enchere_type : "public"
         inputs.enchere_status = host?.vip ? "published" : "pending"
         inputs.description = description
         inputs.files = files
-        inputs.delivery_options = { teliman: deliveryType.teliman, own: deliveryType.own, deliveryPrice: deliveryType.cost ? (delivery.deliveryPrice && delivery.deliveryPrice !== "") ? delivery.deliveryPrice : 0 : 0 }
+        inputs.delivery_options = { teliman: deliveryType.teliman, own: deliveryType.own, cost: deliveryType.cost, deliveryPrice: deliveryType.cost ? (delivery.deliveryPrice && delivery.deliveryPrice !== "") ? delivery.deliveryPrice : 0 : 0 }
         inputs.hostID = checked ? associatedID.value : host?._id
+
+        inputs.started_price = deleteSeparator(inputs.started_price)
+        inputs.increase_price = deleteSeparator(inputs.increase_price)
+        inputs.reserve_price = deleteSeparator(inputs.reserve_price)
+
+        console.log(inputs)
 
         // recuperer les erreurs du control des champs
         const { init_error, error } = validation_create_enchere(inputs)

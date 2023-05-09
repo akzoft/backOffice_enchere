@@ -87,3 +87,25 @@ export const convertOctetsToMo = (octets) => {
 }
 
 export const formatNumberWithSpaces = (data, separator) => data?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, separator || ".");
+
+
+export const inputSeparator = (e, setInputs) => {
+    const inputValue = e.target.value.replace(/[^0-9]/g, ''); // supprimer tous les caractères qui ne sont pas des chiffres
+    const formattedValue = Number(inputValue).toLocaleString(); // ajouter un séparateur de milliers
+    setInputs(formattedValue);
+}
+
+export const inputSeparatorMille = (e, fieldName, setInputs) => {
+    const inputValue = e.target.value.replace(/[^0-9]/g, ''); // supprimer tous les caractères qui ne sont pas des chiffres
+    const formattedValue = Number(inputValue).toLocaleString(); // ajouter un séparateur de milliers
+    setInputs(prevState => ({ ...prevState, [fieldName]: formattedValue }));
+};
+
+export const deleteSeparator = (input) => { return input.replace(/\D/g, '') }
+
+
+export const separatorhandleChange = (e, val, setInputs) => {
+    const { name, value } = e.target;
+    const formattedValue = name === val ? Number(value).toLocaleString() : value;
+    setInputs(prevState => ({ ...prevState, [name]: formattedValue }));
+}

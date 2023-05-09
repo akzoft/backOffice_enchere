@@ -15,7 +15,7 @@ const enchereReducer = (state = init, action) => {
         case _enchere_loading: return { ...state, loading: true, errors: null }
         case _enchere_errors: return { ...state, loading: false, errors: action.payload }
 
-        case _enchere_create_success: return { ...state, loading: false, errors: null, encheres: [...state.encheres, action.payload.ans], created_id: action.payload.ans._id, message: action.payload.message }
+        case _enchere_create_success: return { ...state, loading: false, errors: null, encheres: [...state.encheres, action.payload.ans], created_id: action.payload.ans, message: action.payload.message }
 
         case _enchere_update_success:
             const updatedencheres = state.encheres.map(enchere => {

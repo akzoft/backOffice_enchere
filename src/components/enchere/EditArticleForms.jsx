@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CategoriesArticle, api_public, handleChange, isEmpty } from '../../libs';
+import { CategoriesArticle, api_public, handleChange, inputSeparatorMille, isEmpty } from '../../libs';
 import Select from 'react-select';
 import ReactModal from 'react-modal';
 import JoditEditor from "jodit-react";
@@ -76,19 +76,19 @@ const EditArticleForms = ({ err, files, setFiles, inputs, setInputs, categories,
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Prix de depart <span className='required'>*</span></label>
-                        <input type="text" className='input' name='started_price' value={inputs.started_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='started_price' value={inputs.started_price} onChange={(e) => inputSeparatorMille(e, 'started_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.started_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.started_price}</span>}
                     </div>
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Prix de reservation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => inputSeparatorMille(e, 'increase_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
                     </div>
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Montant d'incrementation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => handleChange(e, setInputs)} />
+                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => inputSeparatorMille(e, 'reserve_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
                     </div>
 
@@ -143,7 +143,7 @@ const EditArticleForms = ({ err, files, setFiles, inputs, setInputs, categories,
                                 <input type="text" className='input' placeholder='Prix de livraison'
                                     name='deliveryPrice'
                                     value={delivery.deliveryPrice}
-                                    onChange={e => handleChange(e, setDelivery)}
+                                    onChange={(e) => inputSeparatorMille(e, 'deliveryPrice', setDelivery)}
                                 />
                             </div>
                         }
@@ -179,13 +179,11 @@ const EditArticleForms = ({ err, files, setFiles, inputs, setInputs, categories,
                     <div className="upload-items">
                         {files?.length > 0 && <div className="autre-images">
                             {files?.map((file, i) => (
-                                <img src={typeof file !== "string" && (URL.createObjectURL(file) || api_public + "/images/" + file)} key={file?.name} alt={file?.name} onClick={() => handleOpenModal(i)} />
+                                <img src={typeof file !== "string" ? URL.createObjectURL(file) : api_public + "/images/" + file} key={file?.name} alt={file?.name} onClick={() => handleOpenModal(i)} />
                             ))}
                         </div>}
                         {!isEmpty(err) && !isEmpty(err.files) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.files}</span>}
                     </div>
-
-
                 </div>
             </div>
         </div>

@@ -197,3 +197,52 @@
 .swal2-confirm {
   color: white;
 }
+
+.nouveau_client {
+  .nouveau_client_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .nouveau_client_required {
+      flex: 1;
+
+      .form-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+
+        .label {
+          white-space: nowrap;
+        }
+
+        .input {
+          padding: 5px;
+          outline: none;
+          border-radius: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+    .nouveau_client_facultatif {
+      flex: 1;
+
+      .form-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+
+        .label {
+          white-space: nowrap;
+        }
+
+        .input {
+          padding: 5px;
+          outline: none;
+          border-radius: 5px;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}

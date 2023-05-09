@@ -77,11 +77,12 @@ export const logout = () => async (dispatch) => {
 export const register = (data) => async (dispatch) => {
     try {
         dispatch(isLoading());
-        const ans = await axios.post(`${api}/api/user`, data)
+        const ans = await axios.post(`${api}/api/user/signup`, data)
 
         if (!isEmpty(ans.data))
             dispatch({ type: _user_register_success, payload: { ans: ans.data.response, message: ans.data.message } })
     } catch (error) {
+        console.log(error)
         dispatch(user_error(error))
     }
 }

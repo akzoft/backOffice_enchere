@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css';
+import { deleteSeparator } from '../../../libs/js/fonctions'
 
 
 const EditionArticles = () => {
@@ -83,15 +84,22 @@ const EditionArticles = () => {
     }, [enchere])
 
 
+    console.log(err)
+
     const handleSave = e => {
         e.preventDefault()
-        inputs.sellerID = host?._id
+
+        inputs.hostID = host?._id
         inputs.categories = categories.map(categorie => categorie.value)
         inputs.expiration_time = new Date(date).toISOString()
         inputs.enchere_type = host?.vip ? inputs.enchere_type : "public"
         inputs.enchere_status = host?.vip ? "published" : "pending"
         inputs.files = files
-        inputs.delivery_options = { teliman: deliveryType.teliman, own: deliveryType.own, deliveryPrice: deliveryType.cost ? (delivery.deliveryPrice && delivery.deliveryPrice !== "") ? delivery.deliveryPrice : 0 : 0 }
+        inputs.delivery_options = { teliman: deliveryType.teliman, own: deliveryType.own, deliveryPrice: deliveryType.cost ? (delivery.deliveryPrice && delivery.deliveryPrice !== "") ? deleteSeparator(delivery.deliveryPrice) : 0 : 0 }
+        inputs.started_price = deleteSeparator(inputs.started_price)
+        inputs.increase_price = deleteSeparator(inputs.increase_price)
+        inputs.reserve_price = deleteSeparator(inputs.reserve_price)
+
 
         if (associatedID?.value !== "" && checked) inputs.hostID = associatedID?.value
         if (isEmpty(categories)) inputs.categories = enchere?.categories
@@ -109,7 +117,8 @@ const EditionArticles = () => {
             init_error.started_price !== error.started_price ||
             init_error.reserve_price !== error.reserve_price ||
             init_error.increase_price !== error.increase_price
-        ) setErr(error)
+        )
+            setErr(error);
         else {
             const { files, ...rest } = inputs
 
@@ -129,14 +138,14 @@ const EditionArticles = () => {
     }
 
     return (
-        <form className='nouvel-article'>
+        <div className='nouvel-article'>
             <Card>
                 <PageTitle title={"Edition de l'article"} linked={false} hideExporte={true} buttonText={"Enregistrer les modifications"} handleSave={handleSave} />
                 <PageTabs />
                 <EditArticleForms description={description} setDescription={setDescription} err={err} files={files} setFiles={setFiles} inputs={inputs} setInputs={setInputs} categories={categories} setCategories={setCategories} date={date} setDate={setDate} deliveryType={deliveryType} setDeliveryType={setDeliveryType} delivery={delivery} setDelivery={setDelivery} checked={checked} setChecked={setChecked} associatedID={associatedID} setAssociatedID={setAssociatedID} />
                 <PageTitle hideTitle={true} title={""} linked={false} hideExporte={true} buttonText={"Enregistrer les modifications"} handleSave={handleSave} />
             </Card>
-        </form>
+        </div>
     )
 }
 

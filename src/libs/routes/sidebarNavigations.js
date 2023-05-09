@@ -31,12 +31,12 @@ const navigations = [
         ]
     },
     {
-        name: "Utilisateurs",
-        to: "/utilisateurs",
+        name: "Administrateurs",
+        to: "/administrateurs",
         icon: "ti ti-user",
         subMenu: [
-            { name: "Tous les utilisateurs", to: "/utilisateurs", },
-            { name: "Nouvel utilisateur", to: "/utilisateurs/nouvel-utilisateur" }
+            { name: "Tous les admins", to: "/administrateurs", },
+            { name: "Nouvel admin", to: "/administrateurs/nouvel-administrateur" }
         ]
     },
     {

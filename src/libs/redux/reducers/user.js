@@ -5,6 +5,7 @@ const init = {
     host: null,
     user: null,
     users: [],
+    user_added: null,
     message: null,
     errors: null,
     loading: false
@@ -25,7 +26,7 @@ const userReducer = (state = init, action) => {
 
         case _user_logout: return { ...init, message: action.payload.message };
 
-        case _user_register_success: return { ...state, loading: false, errors: null, users: [...state.users, action.payload.ans], message: action.payload.message }
+        case _user_register_success: return { ...state, loading: false, errors: null, users: [...state.users, action.payload.ans], user_added: action.payload.ans, message: action.payload.message }
 
         case _user_update_success:
             const updatedUsers = state.users.map(user => {
@@ -43,6 +44,7 @@ const userReducer = (state = init, action) => {
         case _user_gets_success: return { ...state, loading: false, errors: null, users: action.payload.ans, message: action.payload.message }
 
         case _user_clear_errors: return { ...state, errors: null, };
+        case "_clear_user_added_variable": return { ...state, user_added: null, };
 
         default:
             return state;

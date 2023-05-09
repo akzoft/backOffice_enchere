@@ -11,6 +11,7 @@ export const isLoading = () => {
 
 export const enchere_error = (error) => {
     return (dispatch) => {
+        console.log(error)
         dispatch({ type: _enchere_errors, payload: error?.response?.data?.message })
     }
 }
@@ -78,7 +79,7 @@ export const update_enchere = (enchere_id, hostID, files, data) => async (dispat
             const config = { headers: { token } }
 
             const ans = await axios.put(`${api}/api/enchere/${enchere_id}/${hostID}`, { ...data, new_img: response_upload?.data?.response }, config)
-
+            console.log(ans)
             dispatch({ type: _enchere_update_success, payload: { ans: ans.data.response, message: ans.data.message } })
         } else {
             const config = { headers: { token } }

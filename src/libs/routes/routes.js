@@ -19,9 +19,9 @@ const routes = [
     { path: '/clients/clients-publics', name: 'Clients publics', element: ClientsPublics },
     { path: '/clients/clients-vip', name: 'Clients VIP', element: ClientsPrives },
 
-    { path: '/utilisateurs', name: 'Utilisateurs', element: Utilisateurs, exact: true },
-    { path: '/utilisateurs/nouvel-utilisateur', name: 'Nouveau utilisateur', element: NouvelUtilisateur },
-    { path: '/utilisateurs/edition-utilisateur/:id', name: 'Edition utilisateur', element: EditionUtilisateur },
+    { path: '/administrateurs', name: 'Utilisateurs', element: Utilisateurs, exact: true },
+    { path: '/administrateurs/nouvel-administrateur', name: 'Nouvel administrateur', element: NouvelUtilisateur },
+    { path: '/administrateurs/edition-administrateur/:id', name: 'Edition administrateur', element: EditionUtilisateur },
 
     { path: '/parametres', name: 'Paramètres', element: Setting, exact: true },
 

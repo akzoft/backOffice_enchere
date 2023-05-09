@@ -27,6 +27,7 @@ const Articles = () => {
         { name: "Montant d'incrementation", selector: (row) => formatNumberWithSpaces(row?.increase_price) || "...", sortable: true, },
         { name: "Prix actuel", selector: (row) => formatNumberWithSpaces(row?.history[row?.history?.length - 1]?.montant) || formatNumberWithSpaces(row?.started_price), sortable: true, },
         { name: "Status", selector: (row) => row?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(row?.expiration_time) ? "Expiration" : row?.enchere_status === "rejected" ? "Article rejeté" : "Publié", sortable: true, },
+        { name: "Article", selector: (row) => row?.enchere_type === "private" ? "Privé" : row?.enchere_type === "public" && "publique", sortable: true, },
         { name: "Delai d'expiration", selector: (row) => <Countdown date={new Date(row?.expiration_time)} renderer={renderer}></Countdown>, sortable: true, }
     ]
 
@@ -39,7 +40,7 @@ const Articles = () => {
         { label: "corbeille", size: encheres?.filter(enchere => enchere?.trash).length || 0 }]
 
     const dropdownItems = [
-        { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
+        { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
         { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Attente", value: "attente", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
         { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
         { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Réactiver", value: "reactiver", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },

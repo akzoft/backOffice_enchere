@@ -14,7 +14,7 @@ const PageTableHeader = ({ dropdownItems, activeTab, search, dropDown, setDropDo
                     <button onClick={handleApply}><i className='ti ti-check' /> Appliquer</button>
                 </div>
             </div>
-            <div className='table-header-right'><i className='ti ti-search' /><input type={"search"} value={search} onChange={handleFilter} /></div>
+            <div className='table-header-right'><i className='ti ti-search' /><input type={"search"} placeholder='Rechercher...' value={search} onChange={handleFilter} /></div>
         </div>
 
 

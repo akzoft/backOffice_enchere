@@ -1,10 +1,10 @@
 import { isEmpty } from "./fonctions"
 
 export const validation_create_enchere = (data) => {
-    const init_error = { sellerID: "", title: "", files: "", description: "", started_price: "", reserve_price: "", increase_price: "", categories: "", hostID: "" }
+    const init_error = { hostID: "", title: "", files: "", description: "", started_price: "", reserve_price: "", increase_price: "", categories: "" }
     let error = init_error
 
-    const { sellerID, title, files, description, started_price, reserve_price, increase_price, categories, hostID } = data
+    const { hostID, title, files, description, started_price, reserve_price, increase_price, categories } = data
 
     if (isEmpty(files)) error = { ...error, files: "Veuillez choisir au moins une image ou video" }
     else {
@@ -30,7 +30,7 @@ export const validation_create_enchere = (data) => {
     else if (categories.length > 3) error = { ...error, categories: "Le nombre maximal de choix doit être : 3" }
     else error = { ...error, categories: "" }
 
-    if (isEmpty(sellerID)) error = { ...error, sellerID: "Veuillez renseigner le sellerID" }
+    if (isEmpty(hostID)) error = { ...error, hostID: "Veuillez renseigner le hostID" }
 
     if (isEmpty(title)) error = { ...error, title: "Veuillez renseigner le title" }
     else error = { ...error, title: "" }
@@ -55,6 +55,27 @@ export const validation_create_enchere = (data) => {
 
     return { init_error, error }
 }
+
+export const validation_create_client = (data, users) => {
+    const init_error = { phone: "", password: "", password_confirm: "" }
+    let error = init_error
+
+    const { phone, password, password_confirm } = data
+
+
+    if (isEmpty(phone) || phone === "") error = { ...error, phone: "Un numéro de téléphone est requis." }
+    else if (!(/(^(\+223|00223)?[5-9]{1}[0-9]{7}$)/).test(phone)) error = { ...error, phone: "Format du numéro de téléphone incorrect." }
+    if (users?.some(user => user?.phone === phone)) error = { ...error, phone: "Ce compte existe déjà." }
+
+    if (isEmpty(password) || password === "") error = { ...error, password: "Un mot de passe est requis." }
+    else if (password.length < 6) error = { ...error, password: "Mot de passe trop court. Min: 6 caractères" }
+    else if (password !== password_confirm) error = { ...error, password: "Les mots de passe ne se correspondent pas." }
+
+    if (password !== password_confirm) error = { ...error, password_confirm: "Les mots de passe ne se correspondent pas." }
+
+    return { init_error, error }
+}
+
 
 
 export const upload_files_constants = {
