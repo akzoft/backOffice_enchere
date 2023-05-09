@@ -16,6 +16,7 @@ import ArticlesPrivee from "./articles/sub/ArticlesPrivee";
 import ArticlesPublics from "./articles/sub/ArticlesPublics";
 import Login from "./auth/Login";
 import DisplayArticle from "./articles/sub/DisplayArticle";
+import DisplayClient from "./clients/sub/DisplayClient";
 
 
 export {
@@ -23,6 +24,6 @@ export {
     Articles, NouvelArticles, EditionArticles, ArticlesPrivee, ArticlesPublics, DisplayArticle,
     Clients, NouveauClient, EditionClients, ClientsPrives, ClientsPublics,
     Utilisateurs, EditionUtilisateur, NouvelUtilisateur,
-    Setting, Login
+    Setting, Login, DisplayClient
 }
 

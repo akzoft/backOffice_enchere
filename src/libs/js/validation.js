@@ -77,7 +77,6 @@ export const validation_create_client = (data, users) => {
 }
 
 
-
 export const upload_files_constants = {
     MAX_FILES_TO_UPLOAD: 5,
     FILES_ALLOW_TYPES: ['image/jpeg', 'image/jpg', 'image/png', 'video/mp4', 'video/avi'],

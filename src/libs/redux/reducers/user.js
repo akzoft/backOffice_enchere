@@ -6,6 +6,7 @@ const init = {
     user: null,
     users: [],
     user_added: null,
+    user_updated: null,
     message: null,
     errors: null,
     loading: false
@@ -33,7 +34,7 @@ const userReducer = (state = init, action) => {
                 if (user._id === action.payload.ans?._id) { return { ...user, ...action.payload.ans } }
                 return user
             })
-            return { ...state, loading: false, errors: null, users: updatedUsers }
+            return { ...state, loading: false, errors: null, users: updatedUsers, user_updated: action.payload.ans, }
 
         case _user_delete_success:
             const filteredUsers = state.users.filter(user => user._id !== action.payload.ans?._id)
@@ -45,6 +46,7 @@ const userReducer = (state = init, action) => {
 
         case _user_clear_errors: return { ...state, errors: null, };
         case "_clear_user_added_variable": return { ...state, user_added: null, };
+        case "_clear_user_updated_variable": return { ...state, user_updated: null, };
 
         default:
             return state;

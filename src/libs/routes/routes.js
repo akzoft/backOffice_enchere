@@ -1,5 +1,5 @@
 import Login from "../../pages/auth/Login"
-import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs } from "../../pages"
+import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, DisplayClient, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs } from "../../pages"
 
 const routes = [
     { path: '/', exact: true, name: 'Login', element: Login },
@@ -16,6 +16,7 @@ const routes = [
     { path: '/clients', name: 'Clients', element: Clients, exact: true },
     { path: '/clients/nouveau-client', name: 'Nouveau client', element: NouveauClient },
     { path: '/clients/edition-client/:id', name: 'Edition client', element: EditionClients },
+    { path: '/clients/details-client/:id', name: 'Details client', element: DisplayClient },
     { path: '/clients/clients-publics', name: 'Clients publics', element: ClientsPublics },
     { path: '/clients/clients-vip', name: 'Clients VIP', element: ClientsPrives },
 

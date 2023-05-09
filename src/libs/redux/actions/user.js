@@ -89,13 +89,15 @@ export const register = (data) => async (dispatch) => {
 
 export const getUser = (data) => async (dispatch) => {
     try {
-        dispatch(isLoading())
+        // dispatch(isLoading())
         const token = Cookies.get("cookie");
-        const ans = await axios.get(`${api}/user/${data?.id}/${data?.hostID}`, { headers: { token } })
+        const ans = await axios.get(`${api}/api/user/${data?.id}/${data?.hostID}`, { headers: { token } })
+        console.log(ans)
 
         if (!isEmpty(ans.data))
             dispatch({ type: _user_get_success, payload: { ans: ans.data.response, message: ans.data.message } })
     } catch (error) {
+        console.log(error)
         dispatch(user_error(error))
     }
 }
