@@ -34,29 +34,29 @@ const DisplayClientBody = ({ id, user }) => {
                             </div>}
                     </div>
                 </div>
-                <div className="article_details_right">
-                    <strong style={{ fontSize: "24px", letterSpacing: "1px", fontWeight: "300" }}>{_name || user?.phone}</strong>
+                <div className="article_details_right" style={{ background: "black", color: "white", padding: "10px", borderRadius: "5px" }}>
+                    <strong style={{ fontSize: "24px", letterSpacing: "1px", fontWeight: "300", color: "wheat" }}>{_name || user?.phone}</strong>
                     <div className="display_item">
                         <div className="item">
-                            <div style={{ fontSize: "12px" }}>Contact: <strong style={{ fontSize: "14px" }}> {user?.phone}</strong></div>
+                            <div style={{ fontSize: "12px" }}>Contact: <strong style={{ fontSize: "14px", color: "wheat" }}> {user?.phone}</strong></div>
                         </div>
                     </div>
 
                     <div className="display_item">
                         <div className="item">
-                            <div style={{ fontSize: "12px" }}>Email: <strong style={{ fontSize: "14px" }}> {user?.email}</strong></div>
+                            <div style={{ fontSize: "12px" }}>Email: <strong style={{ fontSize: "14px", color: "wheat" }}> {user?.email}</strong></div>
                         </div>
                     </div>
 
                     <div className="display_item">
                         <div className="item">
-                            <div style={{ fontSize: "12px" }}>Vile:<strong style={{ fontSize: "14px" }}> {user?.town}</strong></div>
+                            <div style={{ fontSize: "12px" }}>Vile:<strong style={{ fontSize: "14px", color: "wheat" }}> {user?.town}</strong></div>
                         </div>
                     </div>
 
                     <div className="display_item">
                         <div className="item">
-                            <div style={{ fontSize: "12px" }}>Membre:   <strong style={{ fontSize: "14px" }}> {user?.vip ? "VIP" : "Pas encore vip"}</strong> {user?.vip && <i className='ti ti-crown' style={{ color: "gold", fontWeight: "bold" }} />}</div>
+                            <div style={{ fontSize: "12px" }}>Membre:   <strong style={{ fontSize: "14px", color: "wheat" }}> {user?.vip ? "VIP" : "Pas encore vip"}</strong> {user?.vip && <i className='ti ti-crown' style={{ color: "gold", fontWeight: "bold" }} />}</div>
 
                         </div>
                     </div>
@@ -65,29 +65,29 @@ const DisplayClientBody = ({ id, user }) => {
                         <div className="display_item">
                             <div className="item">
                                 <div >Articles VIP</div>
-                                <div style={{ textAlign: "center" }}><strong>{enchere_en_cours} articles</strong></div>
+                                <div style={{ textAlign: "center", color: "wheat" }}><strong>{enchere_en_cours} articles</strong></div>
                             </div>
 
                             <div className="item">
                                 <div style={{ textAlign: "center" }}>Articles publiques</div>
-                                <div style={{ textAlign: "center" }}><strong>{enchere_rejetes} arcticles</strong></div>
+                                <div style={{ textAlign: "center", color: "wheat" }}><strong>{enchere_rejetes} arcticles</strong></div>
                             </div>
                         </div>}
 
-                    <div className="display_item" style={{ borderRadius: "5px", padding: "5px", backgroundColor: "lightgray" }}>
+                    <div className="display_item" style={{ borderRadius: "5px", padding: "5px", backgroundColor: "lightgray", color: "black" }}>
                         <div className="item">
                             <div >Articles ajoutés</div>
-                            <div style={{ textAlign: "center" }}><strong>{tous} articles</strong></div>
+                            <div style={{ textAlign: "center", color: "brown" }}><strong>{tous} articles</strong></div>
                         </div>
 
                         <div className="item">
                             <div style={{ textAlign: "center" }}>Articles publiés</div>
-                            <div style={{ textAlign: "center" }}><strong>{publier} arcticles</strong></div>
+                            <div style={{ textAlign: "center", color: "brown" }}><strong>{publier} arcticles</strong></div>
                         </div>
 
                         <div className="item">
                             <div style={{ textAlign: "center" }}>Articles en attente</div>
-                            <div style={{ textAlign: "center" }}><strong>{attente} articles</strong></div>
+                            <div style={{ textAlign: "center", color: "brown" }}><strong>{attente} articles</strong></div>
                         </div>
                     </div>
 
@@ -95,17 +95,17 @@ const DisplayClientBody = ({ id, user }) => {
                     <div className="display_item">
                         <div className="item">
                             <div >Articles en cours</div>
-                            <div style={{ textAlign: "center" }}><strong>{enchere_en_cours} articles</strong></div>
+                            <div style={{ textAlign: "center", color: "wheat" }}><strong>{enchere_en_cours} articles</strong></div>
                         </div>
 
                         <div className="item">
                             <div style={{ textAlign: "center" }}>Articles rejetés</div>
-                            <div style={{ textAlign: "center" }}><strong>{enchere_rejetes} arcticles</strong></div>
+                            <div style={{ textAlign: "center", color: "wheat" }}><strong>{enchere_rejetes} arcticles</strong></div>
                         </div>
 
                         <div className="item">
                             <div style={{ textAlign: "center" }}>Articles terminés</div>
-                            <div style={{ textAlign: "center" }}><strong>{enchere_termines} articles</strong></div>
+                            <div style={{ textAlign: "center", color: "wheat" }}><strong>{enchere_termines} articles</strong></div>
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,7 @@ const navigations = [
             { name: "Tous les clients", to: "/clients", },
             { name: "Nouveau client", to: "/clients/nouveau-client" },
             { name: "Clients publics", to: "/clients/clients-publics" },
-            { name: "Clients VIP", to: "/clients/clients-vip" }
+            { name: "Clients VIP", to: "/clients/clients-vip" },
         ]
     },
     {

@@ -1,5 +1,5 @@
 import Login from "../../pages/auth/Login"
-import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, DisplayClient, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs } from "../../pages"
+import { Articles, ArticlesPrivee, ArticlesPublics, Clients, ClientsPrives, ClientsPublics, Dashboard, DisplayArticle, DisplayClient, EditionArticles, EditionClients, EditionUtilisateur, NouveauClient, NouvelArticles, NouvelUtilisateur, Setting, Utilisateurs, VitepayCancel, VitepayDecline, VitepaySuccess } from "../../pages"
 
 const routes = [
     { path: '/', exact: true, name: 'Login', element: Login },
@@ -25,6 +25,12 @@ const routes = [
     { path: '/administrateurs/edition-administrateur/:id', name: 'Edition administrateur', element: EditionUtilisateur },
 
     { path: '/parametres', name: 'Paramètres', element: Setting, exact: true },
+
+
+
+    // { path: '/vitepay-success', name: 'Success', element: VitepaySuccess, exact: true },
+    // { path: '/vitepay-cancel', name: 'Success', element: VitepayCancel, exact: true },
+    // { path: '/vitepay-decline', name: 'Success', element: VitepayDecline, exact: true },
 
 ]
 

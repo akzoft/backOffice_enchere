@@ -17,6 +17,9 @@ import ArticlesPublics from "./articles/sub/ArticlesPublics";
 import Login from "./auth/Login";
 import DisplayArticle from "./articles/sub/DisplayArticle";
 import DisplayClient from "./clients/sub/DisplayClient";
+import VitepaySuccess from "./vitepay/VitepaySuccess";
+import VitepayCancel from "./vitepay/VitepayCancel";
+import VitepayDecline from "./vitepay/VitepayDecline";
 
 
 export {
@@ -24,6 +27,6 @@ export {
     Articles, NouvelArticles, EditionArticles, ArticlesPrivee, ArticlesPublics, DisplayArticle,
     Clients, NouveauClient, EditionClients, ClientsPrives, ClientsPublics,
     Utilisateurs, EditionUtilisateur, NouvelUtilisateur,
-    Setting, Login, DisplayClient
+    Setting, Login, DisplayClient, VitepaySuccess, VitepayCancel, VitepayDecline
 }
 

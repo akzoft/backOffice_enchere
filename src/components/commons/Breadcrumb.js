@@ -29,10 +29,11 @@ const Breadcrumb = () => {
     const currentLocation = useLocation().pathname
     const breadcrumbs = getBreadcrumbs(currentLocation)
     const split = currentLocation.split("/");
-    const path = split[split?.length - 1]
+    // const path = split[split?.length - 1]
 
 
-    const title = path.toUpperCase()?.split("-")
+    // const title = path.toUpperCase()?.split("-")
+    const path = split?.length <= 2 ? split[split?.length - 1] : split[split?.length - 2]
 
 
     return (
@@ -43,7 +44,8 @@ const Breadcrumb = () => {
                         <i className='ti ti-home' style={{ fontSize: "24px", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }} />
                     </div>
 
-                    <div className='breadcrumb-title-label' >{title?.map(t => t + " ")}</div>
+                    <div className='breadcrumb-title-label' >{path.toUpperCase()}</div>
+                    {/* <div className='breadcrumb-title-label' >{title?.map(t => t + " ")}</div> */}
                 </div>
 
                 <div className='breadcrumb-link'>

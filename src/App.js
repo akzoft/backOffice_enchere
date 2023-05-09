@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { PrivateRoute, auth } from "./libs";
 import Login from "./pages/auth/Login";
 import Layout from "./layout";
+import { VitepayCancel, VitepayDecline, VitepaySuccess } from "./pages";
 
 
 
@@ -28,6 +29,9 @@ function App() {
           <Route path="*" element={<Layout />} />
         </Route>
         <Route exact path='/' element={<Login />} />
+        <Route exact path='/success' element={<VitepaySuccess />} />
+        <Route exact path='/cancel' element={<VitepayCancel />} />
+        <Route exact path='/decline' element={<VitepayDecline />} />
       </Routes>
     </HashRouter>
   );
