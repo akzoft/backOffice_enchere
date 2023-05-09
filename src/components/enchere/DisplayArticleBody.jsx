@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { ExpirationVerify, api_public, formatNumberWithSpaces, get_enchere, separatorMille } from "../../libs"
+import { ExpirationVerify, api_public, formatNumberWithSpaces, get_enchere } from "../../libs"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Countdown from "react-countdown";
