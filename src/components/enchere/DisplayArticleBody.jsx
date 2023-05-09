@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { ExpirationVerify, api_public, get_enchere } from "../../libs"
+import { ExpirationVerify, api_public, formatNumberWithSpaces, get_enchere, separatorMille } from "../../libs"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Countdown from "react-countdown";
@@ -58,26 +58,25 @@ const DisplayArticleBody = () => {
                     <div className="display_item">
                         <div className="item">
                             <div >Prix initial</div>
-                            <div style={{ textAlign: "center" }}>  <strong>{enchere?.started_price} FCFA</strong></div>
+                            <div style={{ textAlign: "center" }}>  <strong style={{ color: "tomato" }}>{formatNumberWithSpaces(enchere?.started_price, ".")} FCFA</strong></div>
                         </div>
 
                         <div className="item">
                             <div style={{ textAlign: "center" }}>Prix de reservation</div>
-                            <div style={{ textAlign: "center" }}><strong>{enchere?.reserve_price} FCFA</strong></div>
+                            <div style={{ textAlign: "center" }}><strong>{formatNumberWithSpaces(enchere?.reserve_price, ".")} FCFA</strong></div>
                         </div>
                     </div>
 
                     <div className="display_item">
                         <div className="item" style={{ alignItems: "center", justifyContent: "center" }}>
                             <div style={{ textAlign: "center" }}>Montant d'incrementation</div>
-                            <div ><strong>{enchere?.reserve_price} FCFA</strong></div>
+                            <div ><strong>{formatNumberWithSpaces(enchere?.reserve_price, ".")} FCFA</strong></div>
                         </div>
                     </div>
 
 
-
                     {enchere?.history?.length > 0 && <div>Montant enchere actuel</div>}
-                    {enchere?.history?.length > 0 && <div><strong>{enchere?.history[enchere?.history?.length - 1]?.montant} FCFA</strong></div>}
+                    {enchere?.history?.length > 0 && <div><strong>{formatNumberWithSpaces(enchere?.history[enchere?.history?.length - 1]?.montant, ".")} FCFA</strong></div>}
 
                     <div className="display_item">
                         <div className="item">
@@ -87,35 +86,35 @@ const DisplayArticleBody = () => {
 
                         <div className="item">
                             <div>Option de livraison</div>
-                            <strong>{enchere?.delivery_options?.teliman ? "teliman" : (enchere?.delivery_options?.own && enchere?.delivery_options?.cost) ? enchere?.delivery_options?.deliveryPrice + " FCFA" : "Gratuite"}</strong>
+                            <strong>{enchere?.delivery_options?.teliman ? "teliman" : (enchere?.delivery_options?.own && enchere?.delivery_options?.cost) ? formatNumberWithSpaces(enchere?.delivery_options?.deliveryPrice, ".") + " FCFA" : "Gratuite"}</strong>
 
                         </div>
                     </div>
 
-
-                    <div className="display_item">
-                        <div>Type d'enchere: <strong>{enchere?.enchere_type}</strong></div>
-                    </div>
-
-
-                    <div className="display_item" style={{ justifyContent: "flex-end", width: "100%" }}>
-                        <div className="item" style={{ justifyContent: "flex-end" }} >
-                            <div>Delai d'expiration de l'enchere</div>
-                            <div style={{ display: "flex", justifyContent: "flex-end" }} >  <Countdown date={new Date(enchere?.expiration_time)} renderer={renderer}></Countdown></div>
-                        </div>
-                    </div>
-
-                    <div className="display_item">
-                        <div className="item">
-                            <div>Propriétaire</div>
-                            {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} >{user?.facebook?.first_name || user?.phone}</strong>)}
+                    <div style={{ background: "black", color: "white", padding: "10px", borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
+                        <div className="display_item">
+                            <div>Type d'enchere: <strong style={{ color: "wheat" }}>{enchere?.enchere_type}</strong></div>
                         </div>
 
-                        {enchere?.town && <div className="item">
-                            <div>Localisation</div>
-                            {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} >{user?.town}</strong>)}
-                        </div>}
-                    </div>
+
+                        <div className="display_item" style={{ justifyContent: "flex-end", width: "100%" }}>
+                            <div className="item" style={{ justifyContent: "flex-end" }} >
+                                <div>Delai d'expiration de l'enchere</div>
+                                <div style={{ display: "flex", justifyContent: "flex-end" }} >  <Countdown date={new Date(enchere?.expiration_time)} renderer={renderer}></Countdown></div>
+                            </div>
+                        </div>
+
+                        <div className="display_item">
+                            <div className="item">
+                                <div>Propriétaire</div>
+                                {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} style={{ color: "wheat" }} >{user?.facebook?.first_name || user?.phone}</strong>)}
+                            </div>
+
+                            {enchere?.town && <div className="item">
+                                <div>Localisation</div>
+                                {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} >{user?.town}</strong>)}
+                            </div>}
+                        </div>   </div>
                 </div>
 
             </div>
@@ -145,19 +144,19 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
         // Afficher les labels pour chaque élément
         return (
             <div style={{ display: 'flex', alignItems: 'center', fontSize: "14px", gap: "2px" }}>
-                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
+                <div style={{ background: "tomato", color: "white", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
                     <div style={{ textAlign: "center" }}>{days}</div>
                     <div style={{ fontSize: "8px", textAlign: "center" }}>Jours</div>
                 </div>
-                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
+                <div style={{ background: "lightgray", color: "black", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
                     <div style={{ textAlign: "center" }}>{hours}</div>
                     <div style={{ fontSize: "8px", textAlign: "center" }}>Heures</div>
                 </div>
-                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
+                <div style={{ background: "lightgray", color: "black", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
                     <div style={{ textAlign: "center" }}>{minutes}</div>
                     <div style={{ fontSize: "8px", textAlign: "center" }}>Minutes</div>
                 </div>
-                <div style={{ background: "black", color: "white", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
+                <div style={{ background: "lightgray", color: "black", borderRadius: "5px", width: "40px", height: "40px", justifyContent: "center" }}>
                     <div style={{ textAlign: "center" }}>{seconds}</div>
                     <div style={{ fontSize: "8px", textAlign: "center" }}>Secondes</div>
                 </div>

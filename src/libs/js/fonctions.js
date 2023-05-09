@@ -95,6 +95,11 @@ export const inputSeparator = (e, setInputs) => {
     setInputs(formattedValue);
 }
 
+export const separatorMille = (value) => {
+    const inputValue = value.replace(/[^0-9]/g, '.');
+    return Number(inputValue).toLocaleString();
+}
+
 export const inputSeparatorMille = (e, fieldName, setInputs) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, ''); // supprimer tous les caractères qui ne sont pas des chiffres
     const formattedValue = Number(inputValue).toLocaleString(); // ajouter un séparateur de milliers
