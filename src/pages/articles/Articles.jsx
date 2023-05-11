@@ -18,7 +18,7 @@ const Articles = () => {
     const [rows, setRows] = useState([])
 
     const { host, users } = useSelector(state => state?.user);
-    const { encheres, loading } = useSelector(state => state?.enchere);
+    const { encheres } = useSelector(state => state?.enchere);
 
     const column = [
         { name: "No.", selector: (row, i) => i, },
@@ -176,8 +176,6 @@ const Articles = () => {
         setFiltered(filteredData);
     };
 
-    if (loading)
-        return <Loading />
 
     return (
         <div>

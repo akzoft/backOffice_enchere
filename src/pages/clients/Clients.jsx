@@ -16,7 +16,7 @@ const Clients = () => {
     const [data, setData] = useState([])
     const [rows, setRows] = useState([])
 
-    const { users, host, loading } = useSelector(state => state?.user);
+    const { users, host } = useSelector(state => state?.user);
     const { encheres, } = useSelector(state => state?.enchere)
 
     const column = [
@@ -166,11 +166,6 @@ const Clients = () => {
         setSearch(e.target.value);
         setFiltered(filteredData);
     };
-
-
-    if (loading)
-        return <Loading />
-
 
     return (
         <div>
