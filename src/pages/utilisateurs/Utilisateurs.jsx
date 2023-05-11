@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Loading, PageTableHeader } from '../../components'
+import { Card, PageTableHeader } from '../../components'
 import { PageTabs, PageTitle, Table } from '../../components/commons'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, updateUser } from '../../libs';
