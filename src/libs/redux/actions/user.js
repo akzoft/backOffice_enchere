@@ -86,7 +86,7 @@ export const register = (data) => async (dispatch) => {
     }
 }
 
-export const create_admin = (file, data) => async (dispatch) => {
+export const create_admin = (data, file) => async (dispatch) => {
     try {
         dispatch(isLoading())
 

@@ -53,7 +53,7 @@ const Clients = () => {
             case "corbeille": setData(users?.filter(user => user?.trash && !user?.admin)); setClear(true); break;
             default: setData(users?.filter(user => !user?.trash && !user?.admin)); setClear(true); break;
         }
-        setClear(!clear)
+        setClear(c => !c)
     }, [users, activeTab]);
 
     const handleApply = (e) => {

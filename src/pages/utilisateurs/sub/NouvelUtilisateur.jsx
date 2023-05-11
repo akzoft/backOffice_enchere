@@ -59,8 +59,9 @@ const NouvelUtilisateur = () => {
 
             inputs.admin = true
             inputs.dashboard = true
-            inputs.image = filename;
-            dispatch(create_admin(blob, inputs))
+            if (file) inputs.image = filename;
+            if (file) dispatch(create_admin(inputs, blob))
+            else dispatch(create_admin(inputs))
             setClickSubmit(true)
         }
     }

@@ -63,7 +63,7 @@ const Articles = () => {
             case "corbeille": setData(encheres?.filter(enchere => enchere?.trash)); setClear(true); break;
             default: setData(encheres?.filter(enchere => !enchere?.trash)); setClear(true); break;
         }
-        setClear(!clear)
+        setClear(c => !c)
     }, [encheres, activeTab]);
 
     const handleApply = (e) => {

@@ -31,7 +31,7 @@ const Login = () => {
             })
             dispatch({ type: "_user_clear_errors" })
         }
-    }, [errors])
+    }, [errors, navigate, dispatch])
 
     const fielController = () => {
         const regexPhone = /(^(\+223|00223)?[5-9]{1}[0-9]{7}$)/;
