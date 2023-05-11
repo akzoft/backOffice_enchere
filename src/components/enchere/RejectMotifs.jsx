@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { handleChange, handleChangeCheck } from '../../libs/js/fonctions'
 
 const RejectMotifs = ({ message, _msg, msg, set_msg, setMsg, check, setCheck }) => {
