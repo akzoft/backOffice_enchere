@@ -36,3 +36,274 @@ a {
 
 $mobile: "490px";
 $tablet: "620px";
+
+.card {
+  border-radius: 5px;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+  border: none;
+  padding: 30px;
+  margin-bottom: 30px;
+  background: #ffffff;
+
+  &-sp {
+    border-radius: 5px;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+    padding: rem(0.3);
+    margin-bottom: rem(0.5);
+    background: #ffffff;
+  }
+
+  &-bd {
+    border-radius: 5px;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+    padding: rem(0.3);
+    margin-bottom: rem(0.2);
+    background: #ffffff;
+  }
+}
+
+.card-nb {
+  border-radius: 5px;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+  border: none;
+  padding: 30px;
+  margin-bottom: 30px;
+  background: $body-color;
+
+  &-sp {
+    border-radius: 5px;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+    padding: rem(0.3);
+    margin-bottom: rem(0.5);
+    background: #ffffff;
+  }
+
+  &-bd {
+    border-radius: 5px;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+    padding: rem(0.3);
+    margin-bottom: rem(0.2);
+    background: #ffffff;
+  }
+}
+
+.ligne {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100% !important;
+
+  .col-1 {
+    flex: 1;
+    width: 100% !important;
+  }
+  .col-2 {
+    flex: 2;
+    width: 100% !important;
+  }
+  .col-3 {
+    flex: 3;
+    width: 100% !important;
+  }
+  .col-4 {
+    flex: 4;
+    width: 100% !important;
+  }
+  .col-5 {
+    flex: 5;
+    width: 100% !important;
+  }
+  .col-6 {
+    flex: 6;
+    width: 100% !important;
+  }
+  .col-7 {
+    flex: 7;
+    width: 100% !important;
+  }
+  .col-8 {
+    flex: 8;
+    width: 100% !important;
+  }
+  .col-9 {
+    flex: 9;
+    width: 100% !important;
+  }
+  .col-10 {
+    flex: 10;
+    width: 100% !important;
+  }
+  .col-11 {
+    flex: 11;
+    width: 100% !important;
+  }
+  .col-12 {
+    flex: 12;
+    width: 100% !important;
+  }
+
+  &.xs {
+    @media only screen and (max-width: $tablet) {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      .col {
+        &-1,
+        &-2,
+        &-3,
+        &-4,
+        &-5,
+        &-6,
+        &-7,
+        &-8,
+        &-9,
+        &-10,
+        &-11,
+        &-12 {
+          flex: 12;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
+.ligne-ng {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100% !important;
+
+  .col-1 {
+    flex: 1;
+    width: 100% !important;
+  }
+  .col-2 {
+    flex: 2;
+    width: 100% !important;
+  }
+  .col-3 {
+    flex: 3;
+    width: 100% !important;
+  }
+  .col-4 {
+    flex: 4;
+    width: 100% !important;
+  }
+  .col-5 {
+    flex: 5;
+    width: 100% !important;
+  }
+  .col-6 {
+    flex: 6;
+    width: 100% !important;
+  }
+  .col-7 {
+    flex: 7;
+    width: 100% !important;
+  }
+  .col-8 {
+    flex: 8;
+    width: 100% !important;
+  }
+  .col-9 {
+    flex: 9;
+    width: 100% !important;
+  }
+  .col-10 {
+    flex: 10;
+    width: 100% !important;
+  }
+  .col-11 {
+    flex: 11;
+    width: 100% !important;
+  }
+  .col-12 {
+    flex: 12;
+    width: 100% !important;
+  }
+
+  &.xs {
+    @media only screen and (max-width: $mobile) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .col {
+        &-1,
+        &-2,
+        &-3,
+        &-4,
+        &-5,
+        &-6,
+        &-7,
+        &-8,
+        &-9,
+        &-10,
+        &-11,
+        &-12 {
+          flex: 12;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
+.fx-1 {
+  flex: 1;
+  width: 100% !important;
+}
+.fx-2 {
+  flex: 2;
+  width: 100% !important;
+}
+.fx-3 {
+  flex: 3;
+  width: 100% !important;
+}
+.fx-4 {
+  flex: 4;
+  width: 100% !important;
+}
+.fx-5 {
+  flex: 5;
+  width: 100% !important;
+}
+.fx-6 {
+  flex: 6;
+  width: 100% !important;
+}
+.fx-7 {
+  flex: 7;
+  width: 100% !important;
+}
+.fx-8 {
+  flex: 8;
+  width: 100% !important;
+}
+.fx-9 {
+  flex: 9;
+  width: 100% !important;
+}
+.fx-10 {
+  flex: 10;
+  width: 100% !important;
+}
+.fx-11 {
+  flex: 11;
+  width: 100% !important;
+}
+.fx-12 {
+  flex: 12;
+  width: 100% !important;
+}

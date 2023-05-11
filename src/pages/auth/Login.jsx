@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { handleChange, isEmpty, login } from '../../libs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 const Login = () => {
     var datas = { email: "", phone: "", password: "" }
@@ -12,8 +13,25 @@ const Login = () => {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState(datas);
     const [validation, setValidation] = useState({ username: "", password: "" });
-    const { isAuth } = useSelector(state => state?.user);
+    const { isAuth, errors } = useSelector(state => state?.user);
     const [oldPath, setOldPath] = useState("")
+
+    useEffect(() => {
+        if (errors && errors !== undefined) {
+            const swalWithBootstrapButtons = Swal.mixin({ customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' }, buttonsStyling: false })
+            swalWithBootstrapButtons.fire({
+                title: 'Impossible',
+                text: errors,
+                icon: 'error',
+                confirmButtonText: "D'accord",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/")
+                }
+            })
+            dispatch({ type: "_user_clear_errors" })
+        }
+    }, [errors])
 
     const fielController = () => {
         const regexPhone = /(^(\+223|00223)?[5-9]{1}[0-9]{7}$)/;
@@ -50,7 +68,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         fielController()
-        inputs.dashboard = "true"
+        inputs.dashboard = true
         dispatch(login(inputs));
         if (oldPath) navigate(oldPath); else navigate("/dashboard")
     };

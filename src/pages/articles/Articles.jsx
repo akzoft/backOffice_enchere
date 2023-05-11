@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Card, PageTableHeader } from '../../components'
+import { Card, Loading, PageTableHeader } from '../../components'
 import { PageTabs, PageTitle, Table } from '../../components/commons'
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpirationVerify, delete_enchere, formatNumberWithSpaces, update_enchere_actions } from '../../libs';
+import { ExpirationVerify, delete_enchere, formatNumberWithSpaces, send_notification, update_enchere_actions } from '../../libs';
 import { useNavigate } from 'react-router-dom';
 import Countdown from 'react-countdown';
 
 const Articles = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const [clear, setClear] = useState(false)
     const [activeTab, setActiveTab] = useState("tous");
     const [dropDown, setDropDown] = useState()
     const [search, setSearch] = useState("");
@@ -18,7 +18,7 @@ const Articles = () => {
     const [rows, setRows] = useState([])
 
     const { host, users } = useSelector(state => state?.user);
-    const { encheres } = useSelector(state => state?.enchere);
+    const { encheres, loading } = useSelector(state => state?.enchere);
 
     const column = [
         { name: "No.", selector: (row, i) => i, },
@@ -40,10 +40,10 @@ const Articles = () => {
         { label: "corbeille", size: encheres?.filter(enchere => enchere?.trash).length || 0 }]
 
     const dropdownItems = [
-        { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
-        { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Attente", value: "attente", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
-        { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
-        { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Réactiver", value: "reactiver", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },
+        { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
+        { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "publier" }, { name: "Mettre en attente", value: "attente", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
+        { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
+        { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Annuler le rejet", value: "reactiver", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },
         { name: "Supprimer", value: "supprimer", tab: "terminés" }, { name: "Vider la corbeille", value: "vider", tab: "terminés" },
         { name: "Restaurer", value: "restaurer", tab: "corbeille" }, { name: "Supprimer", value: "supprimer", tab: "corbeille" }, { name: "Vider la corbeille", value: "vider", tab: "corbeille" },
     ]
@@ -55,14 +55,15 @@ const Articles = () => {
 
     useEffect(() => {
         switch (activeTab) {
-            case "tous": setData(encheres?.filter(enchere => !enchere?.trash)); break;
-            case "publier": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && !ExpirationVerify(enchere?.expiration_time))); break;
-            case "attente": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && !ExpirationVerify(enchere?.expiration_time))); break;
-            case "rejetés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && !ExpirationVerify(enchere?.expiration_time))); break;
+            case "tous": setData(encheres?.filter(enchere => !enchere?.trash)); setClear(true); break;
+            case "publier": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
+            case "attente": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
+            case "rejetés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
             case "terminés": setData(encheres?.filter(enchere => !enchere?.trash && ExpirationVerify(enchere?.expiration_time))); break;
-            case "corbeille": setData(encheres?.filter(enchere => enchere?.trash)); break;
-            default: setData(encheres?.filter(enchere => !enchere?.trash)); break;
+            case "corbeille": setData(encheres?.filter(enchere => enchere?.trash)); setClear(true); break;
+            default: setData(encheres?.filter(enchere => !enchere?.trash)); setClear(true); break;
         }
+        setClear(!clear)
     }, [encheres, activeTab]);
 
     const handleApply = (e) => {
@@ -79,8 +80,10 @@ const Articles = () => {
                 case "publier":
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
-                            if (enchere?._id === id)
+                            if (enchere?._id === id) {
+                                users?.forEach(user => { console.log(user?._id, " === ", enchere?.sellerID); if (user?._id === enchere?.sellerID) dispatch(send_notification({ title: "Article publié", body: "La mise en ligne de votre produit a été approuvé. Il est maintenant disponible pour être encherir.", to: user?.notification_token, data: null })) })
                                 dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "published", }));
+                            }
                         });
                     });
                     break;
@@ -96,15 +99,8 @@ const Articles = () => {
                     });
                     break;
 
-                case "rejected":
-                    if (rows?.includes(host?._id)) { alert("\tErreur de d'exlusion\nVous ne pouvez pas exclure votre profile!"); return; }
-
-                    data?.forEach((enchere) => {
-                        rows?.forEach((id) => {
-                            if (enchere?._id === id)
-                                dispatch(update_enchere_actions({ id, hostID: host?._id, enchere_status: "rejected", }));
-                        });
-                    });
+                case "rejetés":
+                    if (rows?.length === 1) navigate(`/articles/rejeter-article/${rows[0]}`);
                     break;
 
                 case "reactiver":
@@ -160,6 +156,7 @@ const Articles = () => {
         if (dropDown === "vider")
             data?.forEach((enchere) => { if (enchere?.trash) dispatch(delete_enchere({ id: enchere?._id, hostID: host?._id })); });
         setRows([]);
+        setClear(!clear);
     };
 
     const handleFilter = (e) => {
@@ -179,6 +176,8 @@ const Articles = () => {
         setFiltered(filteredData);
     };
 
+    if (loading)
+        return <Loading />
 
     return (
         <div>
@@ -186,7 +185,7 @@ const Articles = () => {
                 <PageTitle title={"Liste des Articles"} linked={true} link={"/articles/nouvel-article"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
-                <Table column={column} datas={filtered} setRows={setRows} />
+                <Table clear={clear} column={column} datas={filtered} setRows={setRows} />
             </Card>
         </div>
     )

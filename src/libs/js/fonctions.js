@@ -16,6 +16,16 @@ export const handleChange = (e, setInputs) => {
     });
 };
 
+export const handleChangeCheck = (e, setInputs) => {
+    const { name, checked } = e.target;
+    setInputs((other) => {
+        return {
+            ...other,
+            [name]: checked,
+        };
+    });
+};
+
 export const dateConvertor = (date) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();

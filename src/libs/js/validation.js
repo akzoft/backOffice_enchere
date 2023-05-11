@@ -76,6 +76,46 @@ export const validation_create_client = (data, users) => {
     return { init_error, error }
 }
 
+export const validation_create_admin = (data, users) => {
+    const init_error = { phone: "", password: "", name: "", email: "" }
+    let error = init_error
+
+    const { phone, password, name, email } = data
+
+    if (isEmpty(phone) || phone === "") error = { ...error, phone: "Un numéro de téléphone est requis." }
+    else if (!(/(^(\+223|00223)?[5-9]{1}[0-9]{7}$)/).test(phone)) error = { ...error, phone: "Format du numéro de téléphone incorrect." }
+    if (users?.some(user => user?.phone === phone)) error = { ...error, phone: "Ce compte existe déjà." }
+
+    if (isEmpty(password) || password === "") error = { ...error, password: "Un mot de passe est requis." }
+    else if (password.length < 6) error = { ...error, password: "Mot de passe trop court. Min: 6 caractères" }
+
+    if (isEmpty(name) || name === "") error = { ...error, name: "Un nom est requis." }
+    if (isEmpty(email) || email === "") error = { ...error, email: "Un e-mail est requis." }
+
+    return { init_error, error }
+}
+
+
+export const validation_update_admin = (data, pass) => {
+    const init_error = { phone: "", password: "", name: "", email: "" }
+    let error = init_error
+
+    const { phone, password, name, email } = data
+
+    if (isEmpty(phone) || phone === "") error = { ...error, phone: "Un numéro de téléphone est requis." }
+    else if (!(/(^(\+223|00223)?[5-9]{1}[0-9]{7}$)/).test(phone)) error = { ...error, phone: "Format du numéro de téléphone incorrect." }
+    console.log(pass)
+    if (password) {
+        if (isEmpty(password) || password === "") error = { ...error, password: "Un mot de passe est requis." }
+        else if (password.length < 6) error = { ...error, password: "Mot de passe trop court. Min: 6 caractères" }
+    }
+
+    if (isEmpty(name) || name === "") error = { ...error, name: "Un nom est requis." }
+    if (isEmpty(email) || email === "") error = { ...error, email: "Un e-mail est requis." }
+
+    return { init_error, error }
+}
+
 
 export const upload_files_constants = {
     MAX_FILES_TO_UPLOAD: 5,

@@ -30,8 +30,8 @@ const DisplayArticleBody = () => {
 
     return (
         <div className="article_details">
-            <div className="main_content">
-                <div className="article_details_left">
+            <div className="main_content ">
+                <div className="article_details_left card">
                     <div className="image_container">
                         <Link target="_blank" to={api_public + "/images/" + enchere?.medias[currentImage]} className="main_image">
                             <img src={api_public + "/images/" + enchere?.medias[currentImage]} alt="" />
@@ -49,7 +49,7 @@ const DisplayArticleBody = () => {
                         </div>
                     </div>
                 </div>
-                <div className="article_details_right">
+                <div className="article_details_right card">
                     <strong style={{ fontSize: "24px", letterSpacing: "1px", fontWeight: "300" }}>{enchere?.title}</strong>
 
                     <div style={{ fontSize: "12px" }}>Categories: [{enchere?.categories?.map((categorie, i) => (<strong key={i} style={{ fontSize: "10px", color: "brown", textDecoration: "none" }}>{categorie},</strong>))}]</div>
@@ -70,7 +70,7 @@ const DisplayArticleBody = () => {
                     <div className="display_item">
                         <div className="item" style={{ alignItems: "center", justifyContent: "center" }}>
                             <div style={{ textAlign: "center" }}>Montant d'incrementation</div>
-                            <div ><strong>{formatNumberWithSpaces(enchere?.reserve_price, ".")} FCFA</strong></div>
+                            <div ><strong>{formatNumberWithSpaces(enchere?.increase_price, ".")} FCFA</strong></div>
                         </div>
                     </div>
 
@@ -119,14 +119,27 @@ const DisplayArticleBody = () => {
 
             </div>
 
-            <div style={{ marginTop: "15px", textAlign: "center", background: "brown", color: "White" }}>Souhaitez-vous editer cet articles? <Link to={"/articles/edition-article/" + id} style={{ color: "tomato" }}>OUI</Link></div>
+            {enchere?.enchere_status !== "rejected" && <div style={{ marginTop: "15px", textAlign: "center", background: "brown", color: "White" }}>Souhaitez-vous editer cet articles? <Link to={"/articles/edition-article/" + id} style={{ color: "tomato" }}>OUI</Link></div>}
 
-            <div className="description">
-                <div className="item">
-                    <div>Description</div>
-                    <strong style={{ textAlign: "justify" }}>{parse(`${enchere?.description}`)}</strong>
+            {enchere?.enchere_status !== "rejected" ?
+                <div className="description card">
+                    <div className="item">
+                        <div>Description</div>
+                        <strong style={{ textAlign: "justify" }}>{parse(`${enchere?.description}`)}</strong>
+                    </div>
+                </div> : <div className="description card">
+                    <div className="item" style={{ display: "flex", flexDirection: "column", textAlign: "initial" }}>
+                        <div style={{ fontSize: "20px", color: "tomato" }}>Motifs de rejet</div>
+                        {enchere?.reject_motif?.title?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.title?.message}</strong>}
+                        {enchere?.reject_motif?.description?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.description?.message}</strong>}
+                        {enchere?.reject_motif?.categories?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.categories?.message}</strong>}
+                        {enchere?.reject_motif?.medias?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.medias?.message}</strong>}
+                        {enchere?.reject_motif?.started_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.started_price?.message}</strong>}
+                        {enchere?.reject_motif?.reserve_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.reserve_price?.message}</strong>}
+                        {enchere?.reject_motif?.increase_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.increase_price?.message}</strong>}
+                    </div>
                 </div>
-            </div>
+            }
 
         </div>
     )

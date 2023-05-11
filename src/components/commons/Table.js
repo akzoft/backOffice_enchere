@@ -1,7 +1,7 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
 
-const Table = ({ column, datas, setRows }) => {
+const Table = ({ conditionalRowStyles, clear, column, datas, setRows }) => {
 
     const getSelectedID = (state) => { setRows(state?.selectedRows?.map((row) => row?._id)); };
 
@@ -16,8 +16,10 @@ const Table = ({ column, datas, setRows }) => {
                 pagination
                 highlightOnHover
                 selectableRows
+                clearSelectedRows={clear ? true : false}
                 selectableRowsHighlight
                 onSelectedRowsChange={getSelectedID}
+                conditionalRowStyles={conditionalRowStyles}
             />
         </div>
     )

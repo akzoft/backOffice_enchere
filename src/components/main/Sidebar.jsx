@@ -16,7 +16,13 @@ const SidebarContent = ({ menuItems }) => {
     }, [pathname])
 
     useEffect(() => {
+        dispatch(get_encheres({ hostID: host?._id }))
+    }, [dispatch, host, pathname])
+
+
+    useEffect(() => {
         dispatch(checking())
+
     }, [dispatch, pathname])
 
     useEffect(() => {

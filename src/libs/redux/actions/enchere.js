@@ -96,11 +96,11 @@ export const update_enchere = (enchere_id, hostID, files, data) => async (dispat
 export const update_enchere_actions = (data) => async (dispatch) => {
     try {
         dispatch(isLoading());
-        console.log(data)
+
         const token = Cookies.get("cookie")
-        console.log(token)
+
         const ans = await axios.put(`${api}/api/enchere/${data?.id}/${data?.hostID}`, data, { headers: { token } })
-        console.log(ans.data)
+
         if (!isEmpty(ans.data))
             dispatch({ type: _enchere_update_success, payload: { ans: ans.data.response, message: ans.data.message } })
     } catch (error) {

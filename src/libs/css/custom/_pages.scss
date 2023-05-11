@@ -120,18 +120,25 @@
             height: 300px;
             width: 300px;
             object-fit: contain;
-            // border: 1px solid $main;
+
+            @media only screen and (max-width: $mobile) {
+              width: 200px;
+            }
           }
         }
         .other_images {
           display: flex;
           justify-content: space-between;
+
           img {
-            flex: 3;
             width: 100px;
             height: 100px;
             border: 1px solid $main;
             object-fit: cover;
+          }
+
+          @media only screen and (max-width: $mobile) {
+            flex-wrap: wrap;
           }
         }
       }
@@ -243,6 +250,80 @@
           border: 1px solid rgba(0, 0, 0, 0.3);
         }
       }
+    }
+  }
+}
+
+//profile
+.profile {
+  img {
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+//new user
+
+.new-user {
+  .details-personal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  label {
+    white-space: nowrap;
+  }
+
+  .input {
+    padding: 8px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: $tablet) {
+    .container form {
+      overflow-y: scroll;
+    }
+    .container form::-webkit-scrollbar {
+      display: none;
+    }
+    form .fields .input-field {
+      width: calc(100% / 2 - 15px);
+    }
+
+    input,
+    select {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $mobile) {
+    input,
+    select {
+      width: 100% !important;
+    }
+  }
+}
+
+.rejected {
+  .check_item {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    margin: 10px 0;
+
+    .message_input {
+      width: 100%;
+      outline: none;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      resize: none;
+    }
+
+    .question {
+      font-size: 12px;
+      color: brown;
     }
   }
 }

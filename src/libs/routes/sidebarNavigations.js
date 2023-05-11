@@ -39,15 +39,15 @@ const navigations = [
             { name: "Nouvel admin", to: "/administrateurs/nouvel-administrateur" }
         ]
     },
-    {
+    // {
 
-        name: "Paramètres",
-        to: "/parametres",
-        icon: "ti ti-settings",
-        subMenu: [
-            { name: "Général", to: "/parametres", },
-        ]
-    },
+    //     name: "Paramètres",
+    //     to: "/parametres",
+    //     icon: "ti ti-settings",
+    //     subMenu: [
+    //         { name: "Général", to: "/parametres", },
+    //     ]
+    // },
 
 
 ]
