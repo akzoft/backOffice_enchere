@@ -18,7 +18,7 @@ const Navbar = () => {
                 <div className="navbar-menus">
                     <Link to={"/articles"} className='navbar-menus-item' style={{ color: path === "articles" ? "tomato" : "black" }}>Articles</Link>
                     <Link to={"/clients"} className='navbar-menus-item' style={{ color: path === "clients" ? "tomato" : "black" }}>Clients</Link>
-                    <Link to={"/administrateurs"} className='navbar-menus-item' style={{ color: path === "administrateurs" ? "tomato" : "black" }}>Paramètre</Link>
+                    <Link to={"/administrateurs"} className='navbar-menus-item' style={{ color: path === "administrateurs" ? "tomato" : "black" }}>Administrateurs</Link>
                 </div>
             </div>
 
