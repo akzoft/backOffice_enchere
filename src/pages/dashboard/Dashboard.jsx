@@ -92,19 +92,19 @@ const Dashboard = () => {
 
                             <tbody>
                                 {encheres?.slice(0, 10)?.map((enchere) => (
-                                    <Link to={"/articles/details-article/" + enchere?._id}>
-                                        <tr>
-                                            <td>{enchere?.title}</td>
-                                            <td>{enchere?.started_price}</td>
-                                            <td>{enchere?.reserve_price}</td>
-                                            <td>{enchere?.enchere_type}</td>
-                                            <td>
-                                                <span className={enchere?.enchere_status === "pending" ? "status pending" : enchere?.enchere_status === "livrer" && "status delivered"}>
-                                                    {enchere?.enchere_status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </Link>
+                                    // <Link to={"/articles/details-article/" + enchere?._id}>
+                                    <tr>
+                                        <td>{enchere?.title}</td>
+                                        <td>{enchere?.started_price}</td>
+                                        <td>{enchere?.reserve_price}</td>
+                                        <td>{enchere?.enchere_type}</td>
+                                        <td>
+                                            <span className={enchere?.enchere_status === "pending" ? "status pending" : enchere?.enchere_status === "livrer" && "status delivered"}>
+                                                {enchere?.enchere_status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    // </Link>
                                 ))}
 
                                 {/* <span className="status inProgress">In Progress</span>
