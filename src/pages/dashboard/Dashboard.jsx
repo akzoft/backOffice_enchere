@@ -10,15 +10,8 @@ const Dashboard = () => {
 
     const nb_article_pub = encheres?.filter(enchere => enchere?.enchere_type === "public")?.length
     const nb_article_priv = encheres?.filter(enchere => enchere?.enchere_type === "private")?.length
-    const nb_clt_pub = users?.filter(user => !user?.vip)?.length
-    const nb_clt_priv = users?.filter(user => user?.vip)?.length
-
-    // useEffect(() => {
-    //   setRecentArticle(encheres?.filt)
-
-    // }, [])
-
-
+    const nb_clt_pub = users?.filter(user => !user?.vip && !user?.admin)?.length
+    const nb_clt_priv = users?.filter(user => user?.vip && !user?.admin)?.length
 
     return (
         <div className="main">

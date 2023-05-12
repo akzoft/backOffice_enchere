@@ -26,7 +26,7 @@ const Articles = () => {
         { name: "Propriétaire", selector: (row) => users?.map(user => user?._id === row?.sellerID && (user?.facebook?.first_name || user?.phone)), sortable: true, },
         { name: "Montant d'incrementation", selector: (row) => formatNumberWithSpaces(row?.increase_price) || "...", sortable: true, },
         { name: "Prix actuel", selector: (row) => formatNumberWithSpaces(row?.history[row?.history?.length - 1]?.montant) || formatNumberWithSpaces(row?.started_price), sortable: true, },
-        { name: "Status", selector: (row) => row?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(row?.expiration_time) ? "Expiration" : row?.enchere_status === "rejected" ? "Article rejeté" : "Publié", sortable: true, },
+        { name: "Status", selector: (row) => row?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(row?.expiration_time) ? "Expiration" : row?.enchere_status === "rejected" ? "Article rejeté" : row?.enchere_status === "closed" ? "Terminée" : row?.enchere_status === "published" && "Publié", sortable: true, },
         { name: "Article", selector: (row) => row?.enchere_type === "private" ? "Privé" : row?.enchere_type === "public" && "publique", sortable: true, },
         { name: "Delai d'expiration", selector: (row) => <Countdown date={new Date(row?.expiration_time)} renderer={renderer}></Countdown>, sortable: true, }
     ]
@@ -36,7 +36,7 @@ const Articles = () => {
         { label: "publier", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
         { label: "attente", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
         { label: "rejetés", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
-        { label: "terminés", size: encheres?.filter(enchere => !enchere?.trash && ExpirationVerify(enchere?.expiration_time)).length || 0 },
+        { label: "terminés", size: encheres?.filter(enchere => !enchere?.trash && (ExpirationVerify(enchere?.expiration_time) || enchere?.enchere_status === "closed")).length || 0 },
         { label: "corbeille", size: encheres?.filter(enchere => enchere?.trash).length || 0 }]
 
     const dropdownItems = [
@@ -59,7 +59,7 @@ const Articles = () => {
             case "publier": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
             case "attente": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
             case "rejetés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && !ExpirationVerify(enchere?.expiration_time))); setClear(true); break;
-            case "terminés": setData(encheres?.filter(enchere => !enchere?.trash && ExpirationVerify(enchere?.expiration_time))); break;
+            case "terminés": setData(encheres?.filter(enchere => !enchere?.trash && (ExpirationVerify(enchere?.expiration_time) || enchere?.enchere_status === "closed"))); break;
             case "corbeille": setData(encheres?.filter(enchere => enchere?.trash)); setClear(true); break;
             default: setData(encheres?.filter(enchere => !enchere?.trash)); setClear(true); break;
         }
@@ -180,7 +180,7 @@ const Articles = () => {
     return (
         <div>
             <Card>
-                <PageTitle title={"Liste des Articles"} linked={true} link={"/articles/nouvel-article"} />
+                <PageTitle title={"Liste des Articles"} hideExporte={true} linked={true} link={"/articles/nouvel-article"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
                 <Table clear={clear} column={column} datas={filtered} setRows={setRows} />

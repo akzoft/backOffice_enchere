@@ -81,7 +81,7 @@ const DisplayArticleBody = () => {
                     <div className="display_item">
                         <div className="item">
                             <div>Status</div>
-                            <strong>{enchere?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(enchere?.expiration_time) ? "Expiration" : enchere?.enchere_status === "rejected" ? "Article rejeté" : "Publié"}</strong>
+                            <strong>{enchere?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(enchere?.expiration_time) ? "Expirée" : enchere?.enchere_status === "rejected" ? "Article rejeté" : enchere?.enchere_status === "closed" ? "Terminée" : "Publié"}</strong>
                         </div>
 
                         <div className="item">
@@ -91,23 +91,39 @@ const DisplayArticleBody = () => {
                         </div>
                     </div>
 
-                    <div style={{ background: "black", color: "white", padding: "10px", borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
+                    <div style={{ background: enchere?.enchere_status ? "gray" : "black", color: "white", padding: "10px", borderTopLeftRadius: "30px", borderTopRightRadius: "30px" }}>
                         <div className="display_item">
                             <div>Type d'enchere: <strong style={{ color: "wheat" }}>{enchere?.enchere_type}</strong></div>
                         </div>
 
-
-                        <div className="display_item" style={{ justifyContent: "flex-end", width: "100%" }}>
-                            <div className="item" style={{ justifyContent: "flex-end" }} >
-                                <div>Delai d'expiration de l'enchere</div>
-                                <div style={{ display: "flex", justifyContent: "flex-end" }} >  <Countdown date={new Date(enchere?.expiration_time)} renderer={renderer}></Countdown></div>
+                        {enchere?.enchere_status === "closed" &&
+                            <>   <div className="display_item" style={{ width: "100%" }}>
+                                <div className="item">
+                                    <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>Remportée au montant: <span style={{ display: "flex", color: "tomato" }} >{formatNumberWithSpaces(enchere?.history[enchere?.history?.length - 1]?.montant)} FCFA</span></div>
+                                </div>
                             </div>
-                        </div>
 
+                                <div className="display_item" style={{ width: "100%" }}>
+                                    <div className="item">
+                                        <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>Contact de l'acheteur: <span style={{ display: "flex", color: "wheat" }} >{users?.map(user => user?._id === enchere?.history[enchere?.history?.length - 1]?.buyerID && user?.phone)}</span></div>
+                                    </div>
+                                </div>
+                            </>
+                        }
+
+
+                        {enchere?.enchere_status !== "closed" &&
+                            <div className="display_item" style={{ justifyContent: "flex-end", width: "100%" }}>
+                                <div className="item" style={{ justifyContent: "flex-end" }} >
+                                    <div>Delai d'expiration de l'enchere</div>
+                                    <div style={{ display: "flex", justifyContent: "flex-end" }} >  <Countdown date={new Date(enchere?.expiration_time)} renderer={renderer}></Countdown></div>
+                                </div>
+                            </div>
+
+                        }
                         <div className="display_item">
                             <div className="item">
-                                <div>Propriétaire</div>
-                                {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} style={{ color: "wheat" }} >{user?.facebook?.first_name || user?.phone}</strong>)}
+                                <div>Propriétaire:  {users?.map(user => (enchere?.sellerID === user?._id) && <strong key={enchere?.sellerID} style={{ color: "wheat" }} >{user?.phone || user?.facebook?.first_name}</strong>)}</div>
                             </div>
 
                             {enchere?.town && <div className="item">
@@ -117,31 +133,32 @@ const DisplayArticleBody = () => {
                         </div>   </div>
                 </div>
 
-            </div>
+            </div >
 
-            {enchere?.enchere_status !== "rejected" && <div style={{ marginTop: "15px", textAlign: "center", background: "brown", color: "White" }}>Souhaitez-vous editer cet articles? <Link to={"/articles/edition-article/" + id} style={{ color: "tomato" }}>OUI</Link></div>}
+            {(enchere?.enchere_status !== "rejected" && enchere?.enchere_status !== "closed") && <div style={{ marginTop: "15px", textAlign: "center", background: "brown", color: "White" }}>Souhaitez-vous editer cet articles? <Link to={"/articles/edition-article/" + id} style={{ color: "tomato" }}>OUI</Link></div>}
 
-            {enchere?.enchere_status !== "rejected" ?
-                <div className="description card">
-                    <div className="item">
-                        <div>Description</div>
-                        <strong style={{ textAlign: "justify" }}>{parse(`${enchere?.description}`)}</strong>
+            {
+                enchere?.enchere_status !== "rejected" ?
+                    <div className="description card">
+                        <div className="item">
+                            <div>Description</div>
+                            <strong style={{ textAlign: "justify" }}>{parse(`${enchere?.description}`)}</strong>
+                        </div>
+                    </div> : <div className="description card">
+                        <div className="item" style={{ display: "flex", flexDirection: "column", textAlign: "initial" }}>
+                            <div style={{ fontSize: "20px", color: "tomato" }}>Motifs de rejet</div>
+                            {enchere?.reject_motif?.title?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.title?.message}</strong>}
+                            {enchere?.reject_motif?.description?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.description?.message}</strong>}
+                            {enchere?.reject_motif?.categories?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.categories?.message}</strong>}
+                            {enchere?.reject_motif?.medias?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.medias?.message}</strong>}
+                            {enchere?.reject_motif?.started_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.started_price?.message}</strong>}
+                            {enchere?.reject_motif?.reserve_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.reserve_price?.message}</strong>}
+                            {enchere?.reject_motif?.increase_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.increase_price?.message}</strong>}
+                        </div>
                     </div>
-                </div> : <div className="description card">
-                    <div className="item" style={{ display: "flex", flexDirection: "column", textAlign: "initial" }}>
-                        <div style={{ fontSize: "20px", color: "tomato" }}>Motifs de rejet</div>
-                        {enchere?.reject_motif?.title?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.title?.message}</strong>}
-                        {enchere?.reject_motif?.description?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.description?.message}</strong>}
-                        {enchere?.reject_motif?.categories?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.categories?.message}</strong>}
-                        {enchere?.reject_motif?.medias?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.medias?.message}</strong>}
-                        {enchere?.reject_motif?.started_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.started_price?.message}</strong>}
-                        {enchere?.reject_motif?.reserve_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.reserve_price?.message}</strong>}
-                        {enchere?.reject_motif?.increase_price?.message && <strong style={{ textAlign: "justify" }}>- {enchere?.reject_motif?.increase_price?.message}</strong>}
-                    </div>
-                </div>
             }
 
-        </div>
+        </div >
     )
 }
 export default DisplayArticleBody

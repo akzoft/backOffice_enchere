@@ -71,7 +71,7 @@ const ProfileDisplay = () => {
                                 </div>
 
 
-                                <div
+                                {host?._id === id && <div
                                     className="want-editer-user"
                                     style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "15px", }}>
                                     <span>
@@ -80,7 +80,7 @@ const ProfileDisplay = () => {
                                             OUI!
                                         </Link>
                                     </span>
-                                </div>
+                                </div>}
                             </section>
                         </div>
                     </div>

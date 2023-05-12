@@ -1,19 +1,21 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, DisplayArticleBody, RejectMotifs } from "../../../components";
 import { PageTabs, PageTitle } from "../../../components/commons";
 import { useDispatch, useSelector } from "react-redux";
-import { get_enchere, update_enchere_actions } from "../../../libs";
+import { get_enchere, isEmpty, send_notification, update_enchere_actions } from "../../../libs";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const RejectArticle = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { host } = useSelector(state => state?.user)
-    const { enchere } = useSelector(state => state?.enchere)
+    const { host, users } = useSelector(state => state?.user)
+    const { enchere, errors } = useSelector(state => state?.enchere)
     const [check, setCheck] = useState({ title: false, description: false, categories: false, started_price: false, increase_price: false, medias: false, reserve_price: false })
     const [msg, setMsg] = useState({ title: "", description: "", categories: "", started_price: "", increase_price: "", medias: "", reserve_price: "" })
     const [_msg, set_msg] = useState({ title: false, description: false, categories: false, started_price: false, increase_price: false, medias: false, reserve_price: false })
-
+    const [clickSubmit, setClickSubmit] = useState(false)
 
     useEffect(() => {
         dispatch(get_enchere({ id, hostID: host?._id }))
@@ -22,6 +24,38 @@ const RejectArticle = () => {
     useEffect(() => {
         setCheck({ title: enchere?.reject_motif?.title, description: enchere?.reject_motif?.description, categories: enchere?.reject_motif?.categories, started_price: enchere?.reject_motif?.started_price, increase_price: enchere?.reject_motif?.increase_price, medias: enchere?.reject_motif?.medias, reserve_price: enchere?.reject_motif?.reserve_price })
     }, [enchere])
+
+
+    useEffect(() => {
+        if (isEmpty(errors) && clickSubmit) {
+            const swalWithBootstrapButtons = Swal.mixin({ customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' }, buttonsStyling: false, confirmButtonText: "ooook" })
+            setClickSubmit(false)
+
+            swalWithBootstrapButtons.fire({
+                title: 'Rejet d\'article',
+                text: `L'article ${enchere?.title} a été rejeté!`,
+                icon: 'success',
+                confirmButtonText: "D'accord",
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/articles")
+
+                    setClickSubmit(false)
+                } else {
+                    navigate("/articles")
+                    setClickSubmit(false)
+                }
+
+                users?.forEach(user => { if (user?._id === enchere?.sellerID) dispatch(send_notification({ title: "Article rejeté", body: `Votre article ${enchere?.title} a été rejété.\nArticle: ${enchere?.title}\nPrix: ${enchere?.started_price} FCFA\nMontant d'incrementation: ${enchere?.increase_price} FCFA\n\nVerifier dans l'option mes enchères de l'option "Profile" pour les motifs du rejet.`, to: user?.notification_token, data: null })) })
+
+            })
+        }
+
+    }, [clickSubmit, navigate, errors, dispatch, enchere, users])
+
+
+
 
 
     const message = {
@@ -50,6 +84,7 @@ const RejectArticle = () => {
         }
 
         dispatch(update_enchere_actions(datas));
+        setClickSubmit(true)
     }
     console.log(check)
 

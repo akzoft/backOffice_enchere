@@ -166,7 +166,7 @@ const Utilisateurs = () => {
     return (
         <div>
             <Card>
-                <PageTitle title={"Liste des administrateurs"} linked={true} link={"/administrateurs/nouvel-administrateur"} />
+                <PageTitle hideExporte={true} title={"Liste des administrateurs"} linked={true} link={"/administrateurs/nouvel-administrateur"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
                 <Table conditionalRowStyles={conditionalRowStyles} clear={clear} column={column} datas={filtered} setRows={setRows} />

@@ -34,7 +34,7 @@ const ArticlesPrivee = () => {
         { label: "publier", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
         { label: "attente", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
         { label: "rejetés", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time)).length || 0 },
-        { label: "terminés", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_type === "private" && ExpirationVerify(enchere?.expiration_time)).length || 0 },
+        { label: "terminés", size: encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_type === "private" && (ExpirationVerify(enchere?.expiration_time) || enchere?.enchere_status === "closed")).length || 0 },
         { label: "corbeille", size: encheres?.filter(enchere => enchere?.trash && enchere?.enchere_type === "private").length || 0 }]
 
     const dropdownItems = [
@@ -55,7 +55,7 @@ const ArticlesPrivee = () => {
             case "publier": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time))); break;
             case "attente": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "pending" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time))); break;
             case "rejetés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "rejected" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time))); break;
-            case "terminés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_type === "private" && ExpirationVerify(enchere?.expiration_time))); break;
+            case "terminés": setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_type === "private" && (ExpirationVerify(enchere?.expiration_time) || enchere?.enchere_status === "closed"))); break;
             case "corbeille": setData(encheres?.filter(enchere => enchere?.trash && enchere?.enchere_type === "private")); break;
             default: setData(encheres?.filter(enchere => !enchere?.trash && enchere?.enchere_status === "published" && enchere?.enchere_type === "private" && !ExpirationVerify(enchere?.expiration_time))); break;
         }

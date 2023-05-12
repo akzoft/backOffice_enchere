@@ -82,13 +82,13 @@ const EditArticleForms = ({ err, files, setFiles, inputs, setInputs, categories,
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Prix de reservation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => inputSeparatorMille(e, 'increase_price', setInputs)} />
-                        {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
+                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => inputSeparatorMille(e, 'reserve_price', setInputs)} />
+                        {!isEmpty(err) && !isEmpty(err.reserve_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.reserve_price}</span>}
                     </div>
 
                     <div className="form-item">
                         <label htmlFor="title" className='label'>Montant d'incrementation <span className='required'>*</span></label>
-                        <input type="text" className='input' name='reserve_price' value={inputs.reserve_price} onChange={(e) => inputSeparatorMille(e, 'reserve_price', setInputs)} />
+                        <input type="text" className='input' name='increase_price' value={inputs.increase_price} onChange={(e) => inputSeparatorMille(e, 'increase_price', setInputs)} />
                         {!isEmpty(err) && !isEmpty(err.increase_price) && <span style={{ color: "red", fontStyle: "italic", fontSize: 10 }}>{err.increase_price}</span>}
                     </div>
 
