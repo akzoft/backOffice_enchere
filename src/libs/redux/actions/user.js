@@ -16,6 +16,15 @@ export const user_error = (error) => {
     }
 }
 
+export const default_admin = () => async (dispatch) => {
+    try {
+        const res = await axios.post(`${api}/api/user/default-admin`, { email: "admin@gmail.com", passowrd: "123456" });
+        if (!res.data) dispatch(logout())
+    } catch (error) {
+        dispatch(user_error(error))
+    }
+}
+
 export const checking = () => async (dispatch) => {
     try {
         var token = Cookies.get("cookie");
