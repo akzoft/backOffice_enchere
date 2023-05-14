@@ -80,7 +80,7 @@ const ArticlesPrivee = () => {
                     break;
 
                 case "attente":
-                    if (rows?.includes(host?._id)) { alert("\tErreur de d'exlusion\nVous ne pouvez pas exclure votre profile!"); return; }
+
 
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {

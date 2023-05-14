@@ -39,14 +39,25 @@ const Articles = () => {
         { label: "terminés", size: encheres?.filter(enchere => !enchere?.trash && (ExpirationVerify(enchere?.expiration_time) || enchere?.enchere_status === "closed")).length || 0 },
         { label: "corbeille", size: encheres?.filter(enchere => enchere?.trash).length || 0 }]
 
-    const dropdownItems = [
-        { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
-        { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "publier" }, { name: "Mettre en attente", value: "attente", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
-        { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
-        { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Annuler le rejet", value: "reactiver", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },
-        { name: "Supprimer", value: "supprimer", tab: "terminés" }, { name: "Vider la corbeille", value: "vider", tab: "terminés" },
-        { name: "Restaurer", value: "restaurer", tab: "corbeille" }, { name: "Supprimer", value: "supprimer", tab: "corbeille" }, { name: "Vider la corbeille", value: "vider", tab: "corbeille" },
-    ]
+    const dropdownItems =
+        rows?.length === 1 && encheres?.some(enchere => enchere?._id === rows[0] && enchere?.enchere_type === "private") ?
+            [
+                { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
+                { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Mettre en attente", value: "attente", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
+                { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
+                { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },
+                { name: "Supprimer", value: "supprimer", tab: "terminés" }, { name: "Vider la corbeille", value: "vider", tab: "terminés" },
+                { name: "Restaurer", value: "restaurer", tab: "corbeille" }, { name: "Supprimer", value: "supprimer", tab: "corbeille" }, { name: "Vider la corbeille", value: "vider", tab: "corbeille" },
+            ]
+            :
+            [
+                { name: "Modifier", value: "modifier", tab: "tous" }, { name: "Afficher", value: "afficher", tab: "tous" }, { name: "Publier", value: "publier", tab: "tous" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "tous" }, { name: "Mettre en attente", value: "attente", tab: "tous" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "tous" },
+                { name: "Modifier", value: "modifier", tab: "publier" }, { name: "Afficher", value: "afficher", tab: "publier" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "publier" }, { name: "Mettre en attente", value: "attente", tab: "publier" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "publier" },
+                { name: "Modifier", value: "modifier", tab: "attente" }, { name: "Afficher", value: "afficher", tab: "attente" }, { name: "Publier", value: "publier", tab: "attente" }, { name: "Rejeter l'article(s)", value: "rejetés", tab: "attente" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "attente" },
+                { name: "Modifier", value: "modifier", tab: "rejetés" }, { name: "Afficher", value: "afficher", tab: "rejetés" }, { name: "Annuler le rejet", value: "reactiver", tab: "rejetés" }, { name: "Mettre à la corbeille", value: "in-trash", tab: "rejetés" },
+                { name: "Supprimer", value: "supprimer", tab: "terminés" }, { name: "Vider la corbeille", value: "vider", tab: "terminés" },
+                { name: "Restaurer", value: "restaurer", tab: "corbeille" }, { name: "Supprimer", value: "supprimer", tab: "corbeille" }, { name: "Vider la corbeille", value: "vider", tab: "corbeille" },
+            ]
 
     useEffect(() => {
         if (data) setFiltered(data);
