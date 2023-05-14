@@ -91,7 +91,6 @@ const ArticlesPrivee = () => {
                     break;
 
                 case "rejected":
-                    if (rows?.includes(host?._id)) { alert("\tErreur de d'exlusion\nVous ne pouvez pas exclure votre profile!"); return; }
 
                     data?.forEach((enchere) => {
                         rows?.forEach((id) => {
@@ -160,13 +159,14 @@ const ArticlesPrivee = () => {
         const filteredData = data?.filter(enchere => {
             const searchString = e.target.value.trim().toLowerCase()
             const titleMatches = enchere?.title?.trim().toLowerCase().includes(searchString)
-            const descriptionMatches = enchere?.description?.trim().toLowerCase().includes(searchString)
-            const reserve_priceMatches = enchere?.reserve_price?.toString().trim().toLowerCase().includes(searchString)
-            const locationMatches = enchere?.town?.trim().toLowerCase().includes(searchString)
+            const started_price = enchere?.started_price?.toString().trim().toLowerCase().includes(searchString)
+            const reserve_price = enchere?.reserve_price?.toString().trim().toLowerCase().includes(searchString)
+            const increase_price = enchere?.increase_price?.toString().trim().toLowerCase().includes(searchString)
+            const encheretypeMatches = enchere?.enchere_type?.trim().toLowerCase().includes(searchString)
             const categoriesMatches = enchere?.categories?.some(category => category.trim().toLowerCase().includes(searchString))
-            const phoneMatches = enchere?.sellerID?.phone?.toString().trim().toLowerCase().includes(searchString)
+            const phoneMatches = users?.filter(user => user?._id === enchere?.sellerID)?.some(user => user?.phone?.toString().trim().toLowerCase().includes(searchString))
 
-            return phoneMatches || titleMatches || descriptionMatches || reserve_priceMatches || locationMatches || categoriesMatches
+            return phoneMatches || increase_price || titleMatches || started_price || reserve_price || categoriesMatches || encheretypeMatches
         })
 
         setSearch(e.target.value);
@@ -177,7 +177,7 @@ const ArticlesPrivee = () => {
     return (
         <div>
             <Card>
-                <PageTitle title={"Liste des articles publics"} linked={true} link={"/articles/nouvel-article"} />
+                <PageTitle hideExporte={true} title={"Liste des articles publics"} linked={true} link={"/articles/nouvel-article"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
                 <Table column={column} datas={filtered} setRows={setRows} />

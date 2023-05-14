@@ -146,7 +146,7 @@ const ClientsPrives = () => {
     return (
         <div>
             <Card>
-                <PageTitle title={"Liste des clients"} linked={true} link={"/clients/nouveau-client"} />
+                <PageTitle hideExporte={true} title={"Liste des clients"} linked={true} link={"/clients/nouveau-client"} />
                 <PageTabs tabsItems={tabsItems} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <PageTableHeader dropdownItems={dropdownItems} activeTab={activeTab} dropDown={dropDown} setDropDown={setDropDown} handleApply={handleApply} handleFilter={handleFilter} search={search} />
                 <Table column={column} datas={filtered} setRows={setRows} />
