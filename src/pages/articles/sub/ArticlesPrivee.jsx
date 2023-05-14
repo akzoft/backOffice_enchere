@@ -165,8 +165,11 @@ const ArticlesPrivee = () => {
             const encheretypeMatches = enchere?.enchere_type?.trim().toLowerCase().includes(searchString)
             const categoriesMatches = enchere?.categories?.some(category => category.trim().toLowerCase().includes(searchString))
             const phoneMatches = users?.filter(user => user?._id === enchere?.sellerID)?.some(user => user?.phone?.toString().trim().toLowerCase().includes(searchString))
+            const op1 = enchere?.enchere_type === "private" && "privé".includes(searchString)
+            const op2 = enchere?.enchere_type === "public" && "public".includes(searchString)
 
-            return phoneMatches || increase_price || titleMatches || started_price || reserve_price || categoriesMatches || encheretypeMatches
+
+            return phoneMatches || increase_price || titleMatches || started_price || reserve_price || categoriesMatches || encheretypeMatches || op1 || op2
         })
 
         setSearch(e.target.value);

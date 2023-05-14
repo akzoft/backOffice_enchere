@@ -27,7 +27,7 @@ const Articles = () => {
         { name: "Montant d'incrementation", selector: (row) => formatNumberWithSpaces(row?.increase_price) || "...", sortable: true, },
         { name: "Prix actuel", selector: (row) => formatNumberWithSpaces(row?.history[row?.history?.length - 1]?.montant) || formatNumberWithSpaces(row?.started_price), sortable: true, },
         { name: "Status", selector: (row) => row?.enchere_status === "pending" ? "En attente de confirmation" : ExpirationVerify(row?.expiration_time) ? "Expiration" : row?.enchere_status === "rejected" ? "Article rejeté" : row?.enchere_status === "closed" ? "Terminée" : row?.enchere_status === "published" && "Publié", sortable: true, },
-        { name: "Article", selector: (row) => row?.enchere_type === "private" ? "Privé" : row?.enchere_type === "public" && "publique", sortable: true, },
+        { name: "Article", selector: (row) => row?.enchere_type === "private" ? "Privé" : row?.enchere_type === "public" && "public", sortable: true, },
         { name: "Delai d'expiration", selector: (row) => <Countdown date={new Date(row?.expiration_time)} renderer={renderer}></Countdown>, sortable: true, }
     ]
 
@@ -180,8 +180,11 @@ const Articles = () => {
             const encheretypeMatches = enchere?.enchere_type?.trim().toLowerCase().includes(searchString)
             const categoriesMatches = enchere?.categories?.some(category => category.trim().toLowerCase().includes(searchString))
             const phoneMatches = users?.filter(user => user?._id === enchere?.sellerID)?.some(user => user?.phone?.toString().trim().toLowerCase().includes(searchString))
+            const op1 = enchere?.enchere_type === "private" && "privé".includes(searchString)
+            const op2 = enchere?.enchere_type === "public" && "public".includes(searchString)
 
-            return phoneMatches || increase_price || titleMatches || started_price || reserve_price || categoriesMatches || encheretypeMatches
+
+            return phoneMatches || increase_price || titleMatches || started_price || reserve_price || categoriesMatches || encheretypeMatches || op1 || op2
         })
 
         setSearch(e.target.value);
