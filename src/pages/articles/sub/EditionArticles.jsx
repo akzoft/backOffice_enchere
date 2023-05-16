@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useNavigate, useParams } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css';
 import { deleteSeparator } from '../../../libs/js/fonctions'
-
+import parse from "html-react-parser";
 
 const EditionArticles = () => {
     const { id } = useParams()
@@ -98,7 +98,7 @@ const EditionArticles = () => {
         inputs.started_price = deleteSeparator(inputs.started_price)
         inputs.increase_price = deleteSeparator(inputs.increase_price)
         inputs.reserve_price = deleteSeparator(inputs.reserve_price)
-        inputs.description = description
+        inputs.description = parse(`${description}`)
 
 
         if (associatedID?.value !== "" && checked) inputs.hostID = associatedID?.value
