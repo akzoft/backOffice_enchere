@@ -98,6 +98,7 @@ const EditionArticles = () => {
         inputs.started_price = deleteSeparator(inputs.started_price)
         inputs.increase_price = deleteSeparator(inputs.increase_price)
         inputs.reserve_price = deleteSeparator(inputs.reserve_price)
+        inputs.description = description
 
 
         if (associatedID?.value !== "" && checked) inputs.hostID = associatedID?.value
@@ -125,12 +126,15 @@ const EditionArticles = () => {
                 let list_new_img = new FormData()
                 let old_img = []
 
+                const tab = []
                 for (const file of files) {
-                    if (typeof file !== "string") list_new_img.append('file', file)
+                    if (typeof file !== "string") { list_new_img.append('file', file); tab.push(file) }
                     else old_img.push(file)
                 }
 
-                dispatch(update_enchere(id, host?._id, list_new_img, { ...rest, old_img }))
+                console.log(old_img)
+
+                dispatch(update_enchere(id, host?._id, tab?.length > 0 ? list_new_img : null, tab, { ...rest, old_img }))
                 setClickSubmit(true)
             }
         }
