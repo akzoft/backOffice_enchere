@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css';
 import { deleteSeparator } from '../../../libs/js/fonctions'
-
+import parse from "html-react-parser";
 
 const NouvelArticles = () => {
     const tomorrow = new Date();
@@ -57,7 +57,7 @@ const NouvelArticles = () => {
         inputs.categories = categories.map(categorie => categorie.value)
         inputs.expiration_time = new Date(date).toISOString()
         inputs.enchere_status = host?.vip ? "published" : "pending"
-        inputs.description = description
+        inputs.description = parse(`${description}`)
         inputs.files = files
         inputs.delivery_options = { teliman: deliveryType.teliman, own: deliveryType.own, cost: deliveryType.cost, deliveryPrice: deliveryType.cost ? (delivery.deliveryPrice && delivery.deliveryPrice !== "") ? delivery.deliveryPrice : 0 : 0 }
         inputs.hostID = checked ? associatedID.value : host?._id
